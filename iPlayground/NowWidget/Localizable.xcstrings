@@ -1,16 +1,6 @@
 {
   "sourceLanguage" : "zh-Hant",
   "strings" : {
-    "%@\n%@" : {
-      "localizations" : {
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "%1$@\n%2$@"
-          }
-        }
-      }
-    },
     "%@ %@\n%@" : {
       "localizations" : {
         "zh-Hant" : {
@@ -19,7 +9,8 @@
             "value" : "%1$@ %2$@\n%3$@"
           }
         }
-      }
+      },
+      "shouldTranslate" : false
     },
     "%@ %@%@" : {
       "localizations" : {
@@ -44,12 +35,12 @@
       "shouldTranslate" : false
     },
     "2025" : {
-
+      "shouldTranslate" : false
     },
     "iPlayground" : {
       "shouldTranslate" : false
     },
-    "今年的活動已結束，感謝您的參與！" : {
+    "活動已結束，感謝您的參與！" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -60,7 +51,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "今年のカンファレンスは終了しました。ご参加いただきありがとうございました！"
+            "value" : "イベントは終了しました。ご参加ありがとうございました！"
           }
         }
       }
