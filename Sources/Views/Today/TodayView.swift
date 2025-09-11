@@ -104,7 +104,7 @@ struct TodayView: View {
           Text(
             """
             \(Text(verbatim: "iPlayground").foregroundStyle(Color(.iPlaygroundBlue))) \(Text(verbatim: "2025").foregroundStyle(Color(.iPlaygroundYellow)))
-            \(Text("今年的活動已結束，感謝您的參與！", bundle: .module).foregroundStyle(Color(.iPlaygroundPink)))
+            \(Text("活動已結束，感謝您的參與！", bundle: .module).foregroundStyle(Color(.iPlaygroundPink)))
             """
           )
           .font(.headline)
