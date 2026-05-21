@@ -123,7 +123,7 @@ package struct TodayFeature {
               @Dependency(\.iPlaygroundDataClient) var client
               let cachedSessions = try await client.fetchSchedules(1, .cacheFirst)
               async let sessions = try await client.fetchSchedules(1, .remote)
-              let day1Date = createDate(year: 2025, month: 8, day: 30)
+              let day1Date = IPlaygroundEvent.day1Date
 
               let cached = cachedSessions.map {
                 SessionWrapper(date: day1Date, session: $0)
@@ -141,7 +141,7 @@ package struct TodayFeature {
               @Dependency(\.iPlaygroundDataClient) var client
               let cachedSessions = try await client.fetchSchedules(2, .cacheFirst)
               async let sessions = try await client.fetchSchedules(2, .remote)
-              let day2Date = createDate(year: 2025, month: 8, day: 31)
+              let day2Date = IPlaygroundEvent.day2Date
 
               let cached = cachedSessions.map {
                 SessionWrapper(date: day2Date, session: $0)
@@ -190,13 +190,5 @@ package struct TodayFeature {
         .speaker(.init(speaker: speaker, hackMDURL: hackMDURL)))
       return .none
     }
-  }
-
-  private func createDate(year: Int, month: Int, day: Int) -> Date {
-    var calendar = Calendar(identifier: .gregorian)
-    calendar.timeZone = TimeZone(secondsFromGMT: 8 * 3600)!
-
-    let components = DateComponents(year: year, month: month, day: day)
-    return calendar.date(from: components)!
   }
 }

@@ -39,9 +39,9 @@ struct Provider: TimelineProvider {
       do {
         // Fetch sessions for both days
         let (day1Sessions, day2Sessions) = try await Self.fetchSessions()
-        let day1Date = createDate(year: 2025, month: 8, day: 30)
+        let day1Date = IPlaygroundEvent.day1Date
         let day1Wrappers = Self.convertSessions(day1Sessions, date: day1Date)
-        let day2Date = createDate(year: 2025, month: 8, day: 31)
+        let day2Date = IPlaygroundEvent.day2Date
         let day2Wrappers = Self.convertSessions(day2Sessions, date: day2Date)
         let allSessions = day1Wrappers + day2Wrappers
 
@@ -65,7 +65,7 @@ struct Provider: TimelineProvider {
         result = Timeline(entries: entries, policy: .atEnd)
       } catch {
         // Fallback entry on error
-        let fallbackStartDate = createDate(year: 2025, month: 8, day: 30).addingTimeInterval(
+        let fallbackStartDate = IPlaygroundEvent.day1Date.addingTimeInterval(
           9 * 3600)
         let entry = NowEntry(date: now, phase: .beforeEvent(eventStartDate: fallbackStartDate))
         let timeline = Timeline(entries: [entry], policy: .atEnd)
@@ -131,14 +131,6 @@ struct Provider: TimelineProvider {
       .filter { $0.date >= now }
     return finalEntries
   }
-}
-
-func createDate(year: Int, month: Int, day: Int) -> Date {
-  var calendar = Calendar(identifier: .gregorian)
-  calendar.timeZone = TimeZone(secondsFromGMT: 8 * 3600)!
-
-  let components = DateComponents(year: year, month: month, day: day)
-  return calendar.date(from: components)!
 }
 
 private func findCurrentSession(from sessions: [SessionWrapper], at date: Date) -> SessionWrapper? {

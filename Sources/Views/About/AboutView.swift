@@ -4,7 +4,7 @@ import MapKit
 import Models
 import SwiftUI
 
-// Coordinate and address are hard-coded for 2025 event
+// Coordinate and address are hard-coded for the current event.
 
 let coordinate = CLLocationCoordinate2D(
   latitude: 25.030146,
@@ -60,7 +60,7 @@ package struct AboutView: View {
             .resizable()
             .frame(width: 80, height: 80)
             .clipShape(RoundedRectangle(cornerRadius: 16))
-          Text(verbatim: "iPlayground 2025")
+          Text(verbatim: "iPlayground \(IPlaygroundEvent.yearString)")
             .font(.title)
             .monospaced()
         }

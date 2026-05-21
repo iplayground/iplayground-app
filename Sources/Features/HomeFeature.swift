@@ -17,7 +17,6 @@ package struct HomeFeature {
 
     package var today = TodayFeature.State()
     package var community = CommunityFeature.State()
-    package var liveTranslation = LiveTranslationFeature.State()
     package var my = MyFeature.State()
     package var about = AboutFeature.State()
 
@@ -27,7 +26,6 @@ package struct HomeFeature {
   package enum Action: Equatable, BindableAction {
     case today(TodayFeature.Action)
     case community(CommunityFeature.Action)
-    case liveTranslation(LiveTranslationFeature.Action)
     case my(MyFeature.Action)
     case about(AboutFeature.Action)
     case binding(BindingAction<State>)
@@ -42,9 +40,6 @@ package struct HomeFeature {
     }
     Scope(state: \.community, action: \.community) {
       CommunityFeature()
-    }
-    Scope(state: \.liveTranslation, action: \.liveTranslation) {
-      LiveTranslationFeature()
     }
     Scope(state: \.my, action: \.my) {
       MyFeature()
@@ -62,9 +57,6 @@ package struct HomeFeature {
       return .none
 
     case .community:
-      return .none
-
-    case .liveTranslation:
       return .none
 
     case .my:

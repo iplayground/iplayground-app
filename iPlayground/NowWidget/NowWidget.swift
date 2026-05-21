@@ -27,9 +27,8 @@ struct NowWidget: Widget {
 #Preview("活動前", as: .systemSmall) {
   NowWidget()
 } timeline: {
-  let eventStartDate = createDate(year: 2025, month: 8, day: 30).addingTimeInterval(9 * 3600)
-  let beforeEventDate = Calendar(identifier: .gregorian).date(
-    from: DateComponents(year: 2025, month: 8, day: 29, hour: 9, minute: 0))!
+  let eventStartDate = IPlaygroundEvent.day1Date.addingTimeInterval(9 * 3600)
+  let beforeEventDate = IPlaygroundEvent.date(month: 7, day: 24, hour: 9)
 
   NowEntry(
     date: beforeEventDate,
@@ -40,9 +39,8 @@ struct NowWidget: Widget {
 #Preview("活動中", as: .systemMedium) {
   NowWidget()
 } timeline: {
-  let eventStartDate = createDate(year: 2025, month: 8, day: 30).addingTimeInterval(8 * 3600)
-  let beforeEventDate = Calendar(identifier: .gregorian).date(
-    from: DateComponents(year: 2025, month: 8, day: 29, hour: 9, minute: 0))!
+  let eventStartDate = IPlaygroundEvent.day1Date.addingTimeInterval(8 * 3600)
+  let beforeEventDate = IPlaygroundEvent.date(month: 7, day: 24, hour: 9)
 
   NowEntry(
     date: beforeEventDate,
@@ -53,9 +51,9 @@ struct NowWidget: Widget {
     forResource: "schedule", withExtension: "json")!
   let data = try! Data(contentsOf: url)
   let schedule = try! JSONDecoder().decode(Schedule.self, from: data)
-  let day1Date = createDate(year: 2025, month: 8, day: 30)
+  let day1Date = IPlaygroundEvent.day1Date
   let day1Wrappers = Provider.convertSessions(schedule.day1, date: day1Date)
-  let day2Date = createDate(year: 2025, month: 8, day: 31)
+  let day2Date = IPlaygroundEvent.day2Date
   let day2Wrappers = Provider.convertSessions(schedule.day2, date: day2Date)
   let allSessions = day1Wrappers + day2Wrappers
   let entries = Provider.convertSessionWrappers(allSessions)
@@ -65,8 +63,7 @@ struct NowWidget: Widget {
     entry
   }
 
-  let afterEventDate = Calendar(identifier: .gregorian).date(
-    from: DateComponents(year: 2025, month: 8, day: 31, hour: 18, minute: 0))!
+  let afterEventDate = IPlaygroundEvent.date(month: 7, day: 26, hour: 18)
 
   NowEntry(
     date: afterEventDate,
@@ -77,8 +74,7 @@ struct NowWidget: Widget {
 #Preview("活動結束後", as: .systemSmall) {
   NowWidget()
 } timeline: {
-  let afterEventDate = Calendar(identifier: .gregorian).date(
-    from: DateComponents(year: 2025, month: 8, day: 31, hour: 18, minute: 0))!
+  let afterEventDate = IPlaygroundEvent.date(month: 7, day: 26, hour: 18)
 
   NowEntry(
     date: afterEventDate,

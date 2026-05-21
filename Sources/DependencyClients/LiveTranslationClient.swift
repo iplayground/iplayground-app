@@ -131,7 +131,7 @@ extension LiveTranslationClient: TestDependencyKey {
     getChatRoomInfo: { _ in
       ChatRoomInfo(
         chatRoomID: "490294",
-        chatRoomTitle: "iPlayground 2025"
+        chatRoomTitle: "iPlayground 2026"
       )
     },
     chatConnection: { _ in

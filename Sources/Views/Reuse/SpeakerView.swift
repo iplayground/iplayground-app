@@ -181,7 +181,7 @@ struct SpeakerView: View {
               "John is a software engineer with a passion for building scalable and efficient systems.",
             photo: URL(
               string:
-                "https://raw.githubusercontent.com/iplayground/SessionData/2025/v1/images/speakers/speaker_鄭宇哲.jpg"
+                "https://raw.githubusercontent.com/iplayground/SessionData/2026/v1/images/speakers/speaker_鄭宇哲.jpg"
             ),
             url: URL(string: "https://www.google.com")!,
             fb: URL(string: "https://www.facebook.com")!,

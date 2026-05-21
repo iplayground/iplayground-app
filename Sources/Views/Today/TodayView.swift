@@ -91,7 +91,7 @@ struct TodayView: View {
         HStack {
           Text(
             """
-            \(Text(verbatim: "iPlayground").foregroundStyle(Color(.iPlaygroundBlue))) \(Text(verbatim: "2025").foregroundStyle(Color(.iPlaygroundYellow)))
+            \(Text(verbatim: "iPlayground").foregroundStyle(Color(.iPlaygroundBlue))) \(Text(verbatim: IPlaygroundEvent.yearString).foregroundStyle(Color(.iPlaygroundYellow)))
             \(Text(startDate, style: .relative).foregroundStyle(Color(.iPlaygroundPink)))
             """
           )
@@ -103,7 +103,7 @@ struct TodayView: View {
         HStack {
           Text(
             """
-            \(Text(verbatim: "iPlayground").foregroundStyle(Color(.iPlaygroundBlue))) \(Text(verbatim: "2025").foregroundStyle(Color(.iPlaygroundYellow)))
+            \(Text(verbatim: "iPlayground").foregroundStyle(Color(.iPlaygroundBlue))) \(Text(verbatim: IPlaygroundEvent.yearString).foregroundStyle(Color(.iPlaygroundYellow)))
             \(Text("活動已結束，感謝您的參與！", bundle: .module).foregroundStyle(Color(.iPlaygroundPink)))
             """
           )
@@ -239,11 +239,9 @@ extension TodayFeature.State.Day {
   var startOfDay: Date {
     switch self {
     case .day1:
-      return Calendar(identifier: .gregorian).date(
-        from: DateComponents(year: 2025, month: 8, day: 30))!
+      return IPlaygroundEvent.day1Date
     case .day2:
-      return Calendar(identifier: .gregorian).date(
-        from: DateComponents(year: 2025, month: 8, day: 31))!
+      return IPlaygroundEvent.day2Date
     }
   }
 }
@@ -251,8 +249,7 @@ extension TodayFeature.State.Day {
 #Preview("活動前") {
   let _ = prepareDependencies {
     $0.date.now = {
-      let date = Calendar(identifier: .gregorian).date(
-        from: DateComponents(year: 2025, month: 8, day: 29, hour: 9, minute: 0))!
+      let date = IPlaygroundEvent.date(month: 7, day: 24, hour: 9)
       return date
     }()
   }
@@ -267,8 +264,7 @@ extension TodayFeature.State.Day {
 #Preview("活動中 - Day 1") {
   let _ = prepareDependencies {
     $0.date.now = {
-      let date = Calendar(identifier: .gregorian).date(
-        from: DateComponents(year: 2025, month: 8, day: 30, hour: 9, minute: 35))!
+      let date = IPlaygroundEvent.date(month: 7, day: 25, hour: 9, minute: 35)
       return date
     }()
   }
@@ -283,8 +279,7 @@ extension TodayFeature.State.Day {
 #Preview("活動中 - Day 1 與 2 之間") {
   let _ = prepareDependencies {
     $0.date.now = {
-      let date = Calendar(identifier: .gregorian).date(
-        from: DateComponents(year: 2025, month: 8, day: 30, hour: 20, minute: 35))!
+      let date = IPlaygroundEvent.date(month: 7, day: 25, hour: 20, minute: 35)
       return date
     }()
   }
@@ -299,8 +294,7 @@ extension TodayFeature.State.Day {
 #Preview("活動中 - Day 2") {
   let _ = prepareDependencies {
     $0.date.now = {
-      let date = Calendar(identifier: .gregorian).date(
-        from: DateComponents(year: 2025, month: 8, day: 31, hour: 17, minute: 10))!
+      let date = IPlaygroundEvent.date(month: 7, day: 26, hour: 17, minute: 10)
       return date
     }()
   }
@@ -315,8 +309,7 @@ extension TodayFeature.State.Day {
 #Preview("活動結束後") {
   let _ = prepareDependencies {
     $0.date.now = {
-      let date = Calendar(identifier: .gregorian).date(
-        from: DateComponents(year: 2025, month: 8, day: 31, hour: 18, minute: 0))!
+      let date = IPlaygroundEvent.date(month: 7, day: 26, hour: 18)
       return date
     }()
   }
