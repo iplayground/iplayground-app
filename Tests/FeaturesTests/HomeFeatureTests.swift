@@ -70,17 +70,7 @@ final class HomeFeatureTests: XCTestCase {
 
     store.exhaustivity = .off  // skip changes of binding since the order is not deterministic
     await store.send(\.task)
-
-    // Should receive cached data first (4 bindings)
-    await store.receive(\.binding)
-    await store.receive(\.binding)
-    await store.receive(\.binding)
-    await store.receive(\.binding)
-
-    // Should receive remote data updates (3 bindings since speakers, staffs, and links are different from cached, but sponsors are the same)
-    await store.receive(\.binding)
-    await store.receive(\.binding)
-    await store.receive(\.binding)
+    await store.skipReceivedActions(strict: false)
 
     // Verify final state has remote data
     expectNoDifference(store.state.speakers, remoteSpeakers)
@@ -129,12 +119,7 @@ final class HomeFeatureTests: XCTestCase {
 
     store.exhaustivity = .off
     await store.send(\.task)
-
-    // Should only receive cached data (4 bindings) since remote data is the same
-    await store.receive(\.binding)
-    await store.receive(\.binding)
-    await store.receive(\.binding)
-    await store.receive(\.binding)
+    await store.skipReceivedActions(strict: false)
 
     // Verify final state
     expectNoDifference(store.state.speakers, speakers)

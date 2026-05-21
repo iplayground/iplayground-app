@@ -73,6 +73,8 @@ package struct TodayFeature {
     case binding(BindingAction<State>)
     case path(StackActionOf<Path>)
     case view(ViewAction)
+    case loadedDay1Sessions([SessionWrapper])
+    case loadedDay2Sessions([SessionWrapper])
     case navigateToSpeaker(Speaker, hackMDURL: URL?)
 
     @CasePathable
@@ -93,10 +95,12 @@ package struct TodayFeature {
 
   package func core(state: inout State, action: Action) -> Effect<Action> {
     switch action {
-    case .binding(\.day1Sessions):
+    case let .loadedDay1Sessions(sessions):
+      state.$day1Sessions.withLock { $0 = sessions }
+
       if state.initialLoaded == false {
         // 如果現在時間超過第一天的議程的內容，則把selectedDay切成第二天
-        if let lastSessionEnd = state.day1Sessions.last?.dateInterval?.end {
+        if let lastSessionEnd = sessions.last?.dateInterval?.end {
           @Dependency(\.date.now) var now
           if now > lastSessionEnd {
             state.selectedDay = .day2
@@ -106,6 +110,10 @@ package struct TodayFeature {
         state.initialLoaded = true
       }
 
+      return .none
+
+    case let .loadedDay2Sessions(sessions):
+      state.$day2Sessions.withLock { $0 = sessions }
       return .none
 
     case .binding:
@@ -128,13 +136,13 @@ package struct TodayFeature {
               let cached = cachedSessions.map {
                 SessionWrapper(date: day1Date, session: $0)
               }
-              await send(.binding(.set(\.day1Sessions, cached)))
+              await send(.loadedDay1Sessions(cached))
 
               let remoteSessions = try await sessions.map {
                 SessionWrapper(date: day1Date, session: $0)
               }
               if remoteSessions != cached {
-                await send(.binding(.set(\.day1Sessions, remoteSessions)))
+                await send(.loadedDay1Sessions(remoteSessions))
               }
             }
             group.addTask {
@@ -146,13 +154,13 @@ package struct TodayFeature {
               let cached = cachedSessions.map {
                 SessionWrapper(date: day2Date, session: $0)
               }
-              await send(.binding(.set(\.day2Sessions, cached)))
+              await send(.loadedDay2Sessions(cached))
 
               let remoteSessions = try await sessions.map {
                 SessionWrapper(date: day2Date, session: $0)
               }
               if remoteSessions != cached {
-                await send(.binding(.set(\.day2Sessions, remoteSessions)))
+                await send(.loadedDay2Sessions(remoteSessions))
               }
             }
           }

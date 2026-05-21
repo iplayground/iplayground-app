@@ -7,8 +7,11 @@
 import ComposableArchitecture
 
 extension CommunityFeature {
-  @Reducer(state: .equatable, action: .equatable)
+  @Reducer
   package enum Path {
     case speaker(SpeakerFeature)
   }
 }
+
+extension CommunityFeature.Path.State: Equatable {}
+extension CommunityFeature.Path.Action: Equatable {}

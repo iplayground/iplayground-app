@@ -7,8 +7,11 @@
 import ComposableArchitecture
 
 extension TodayFeature {
-  @Reducer(state: .equatable, action: .equatable)
+  @Reducer
   package enum Path {
     case speaker(SpeakerFeature)
   }
 }
+
+extension TodayFeature.Path.State: Equatable {}
+extension TodayFeature.Path.Action: Equatable {}

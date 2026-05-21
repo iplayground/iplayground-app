@@ -184,6 +184,12 @@ struct SingleTargetLibrary {
   }
 
   var testTarget: Target {
-    .testTarget(name: name + "Tests", dependencies: [targetDependency])
+    .testTarget(
+      name: name + "Tests",
+      dependencies: [targetDependency],
+      linkerSettings: [
+        .linkedFramework("AppIntents")
+      ]
+    )
   }
 }

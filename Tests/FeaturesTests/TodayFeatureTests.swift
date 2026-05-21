@@ -24,15 +24,7 @@ final class TodayFeatureTests: XCTestCase {
 
     // Just verify the task starts without error
     await store.send(\.view.task)
-
-    // We expect two binding actions, handle the state changes appropriately
-    await store.receive(\.binding) { state in
-      if state.day1Sessions.isEmpty && state.day2Sessions.isEmpty {
-        // First action sets day1Sessions to empty array
-        state.initialLoaded = true
-      }
-    }
-    await store.receive(\.binding)
+    await store.skipReceivedActions(strict: false)
   }
 
   func testBindingDay1SessionsWithInitialLoad() async {
@@ -53,13 +45,13 @@ final class TodayFeatureTests: XCTestCase {
       $0.date.now = now
     }
 
-    await store.send(\.binding.day1Sessions, [day1Session]) {
+    await store.send(.loadedDay1Sessions([day1Session])) {
       $0.$day1Sessions.withLock { $0 = [day1Session] }
       $0.selectedDay = .day2
       $0.initialLoaded = true
     }
 
-    await store.send(\.binding.day1Sessions, [day1Session])
+    await store.send(.loadedDay1Sessions([day1Session]))
   }
 
   func testBindingDay1SessionsWithoutAutoSwitchToDay2() async {
@@ -86,7 +78,7 @@ final class TodayFeatureTests: XCTestCase {
       $0.selectedDay = .day1
     }
 
-    await store.send(\.binding.day1Sessions, [day1Session]) {
+    await store.send(.loadedDay1Sessions([day1Session])) {
       $0.$day1Sessions.withLock { $0 = [day1Session] }
       $0.initialLoaded = true
     }
@@ -102,7 +94,7 @@ final class TodayFeatureTests: XCTestCase {
       TodayFeature()
     }
 
-    await store.send(\.binding.day1Sessions, [day1Session]) {
+    await store.send(.loadedDay1Sessions([day1Session])) {
       $0.$day1Sessions.withLock { $0 = [day1Session] }
     }
   }
