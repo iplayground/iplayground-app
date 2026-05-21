@@ -7,11 +7,13 @@
 
 import ComposableArchitecture
 import Features
+import Models
 import SwiftUI
 
 @ViewAction(for: CommunityFeature.self)
 struct CommunityView: View {
   @Bindable var store: StoreOf<CommunityFeature>
+  @Environment(\.iPlaygroundTheme) private var theme
 
   var body: some View {
     NavigationStack(
@@ -31,13 +33,17 @@ struct CommunityView: View {
     VStack(spacing: .zero) {
       tabs
         .background {
-          store.selectedTab.backgroundColor
+          store.selectedTab.backgroundColor(theme: theme)
         }
 
       switch store.selectedTab {
       case .sponsor:
-        sponsorsView
-          .environment(\.colorScheme, .light)
+        if theme == .y2025 {
+          sponsorsView
+            .environment(\.colorScheme, .light)
+        } else {
+          sponsorsView
+        }
       case .speaker:
         speakersView
       case .staff:
@@ -46,8 +52,7 @@ struct CommunityView: View {
     }
     .navigationTitle(String(localized: "社群", bundle: .module))
     .navigationBarTitleDisplayMode(.inline)
-    .toolbarBackground(.visible, for: .navigationBar)
-    .toolbarBackground(store.selectedTab.backgroundColor, for: .navigationBar)
+    .modifier(CommunityNavigationBarStyle(selectedTab: store.selectedTab, theme: theme))
     .task {
       send(.task)
     }
@@ -163,6 +168,7 @@ struct CommunityView: View {
 
       if let url = url {
         Link(destination: url, label: { Image(systemName: "arrow.up.right.square") })
+          .foregroundStyle(theme.tint)
       }
     }
   }
@@ -213,12 +219,12 @@ struct CommunityView: View {
           destination: url,
           label: {
             Image(systemName: "arrow.up.right.square")
-              .foregroundStyle(Color(.accent))
+              .foregroundStyle(theme.tint)
           }
         )
       case .chevron:
         Image(systemName: "chevron.right")
-          .foregroundStyle(Color(.accent))
+          .foregroundStyle(theme.tint)
       case .empty:
         EmptyView()
       }
@@ -262,6 +268,23 @@ struct CommunityView: View {
   }
 }
 
+private struct CommunityNavigationBarStyle: ViewModifier {
+  let selectedTab: CommunityFeature.Tab
+  let theme: IPlaygroundTheme
+
+  @ViewBuilder
+  func body(content: Content) -> some View {
+    switch theme {
+    case .y2026:
+      content
+    case .y2025:
+      content
+        .toolbarBackground(.visible, for: .navigationBar)
+        .toolbarBackground(selectedTab.backgroundColor(theme: theme), for: .navigationBar)
+    }
+  }
+}
+
 extension CommunityFeature.Tab {
   var localizedStringKey: LocalizedStringKey {
     switch self {
@@ -274,14 +297,14 @@ extension CommunityFeature.Tab {
     }
   }
 
-  var backgroundColor: Color {
+  func backgroundColor(theme: IPlaygroundTheme) -> Color {
     switch self {
     case .speaker:
-      return Color(.iPlaygroundBlueBackground)
+      return theme.speakerBackground
     case .sponsor:
-      return Color(.iPlaygroundYellowBackground)
+      return theme.sponsorBackground
     case .staff:
-      return Color(.iPlaygroundPinkBackground)
+      return theme.staffBackground
     }
   }
 }

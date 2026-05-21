@@ -13,6 +13,7 @@ import SwiftUI
 @ViewAction(for: MyFeature.self)
 struct MyView: View {
   @Bindable package var store: StoreOf<MyFeature>
+  @Environment(\.iPlaygroundTheme) private var theme
 
   var body: some View {
     NavigationStack {
@@ -51,6 +52,7 @@ struct MyView: View {
           }
           Spacer()
           Image(systemName: "arrow.up.right.square")
+            .foregroundStyle(theme.tint)
         }
       },
       primaryAction: {

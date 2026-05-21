@@ -13,6 +13,7 @@ struct NowWidgetEntryView: View {
   var entry: Provider.Entry
 
   @Environment(\.widgetFamily) var widgetFamily
+  @Environment(\.iPlaygroundTheme) private var theme
 
   var body: some View {
     VStack(alignment: .leading, spacing: 8) {
@@ -35,8 +36,8 @@ struct NowWidgetEntryView: View {
   private func beforeEventView(eventStartDate: Date) -> some View {
     Text(
       """
-      \(Text(verbatim: "iPlayground").foregroundStyle(Color(.iPlaygroundBlue))) \(Text(verbatim: IPlaygroundEvent.yearString).foregroundStyle(Color(.iPlaygroundYellow)))
-      \(Text(eventStartDate, style: .relative).foregroundStyle(Color(.iPlaygroundPink)))
+      \(Text(verbatim: "iPlayground").foregroundStyle(theme.primary)) \(Text(verbatim: IPlaygroundEvent.yearString).foregroundStyle(theme.secondary))
+      \(Text(eventStartDate, style: .relative).foregroundStyle(theme.tertiary))
       """
     )
     .font(.headline)
@@ -58,7 +59,7 @@ struct NowWidgetEntryView: View {
             """
           )
           .font(.headline)
-          .foregroundStyle(Color(.iPlaygroundBlue))
+          .foregroundStyle(theme.primary)
         }
 
         if let nextSession = nextSession {
@@ -66,7 +67,7 @@ struct NowWidgetEntryView: View {
             "\(Text(nextSession.dateInterval?.start.formatted(date: .omitted, time: .shortened) ?? "")) \(nextSession.title)\(nextSession.speaker.isEmpty ? "" : " - \(nextSession.speaker)")"
           )
           .font(.subheadline)
-          .foregroundStyle(Color(.iPlaygroundPink))
+          .foregroundStyle(theme.tertiary)
         }
 
         if widgetFamily != .systemSmall {
@@ -75,7 +76,7 @@ struct NowWidgetEntryView: View {
               "\(Text(nextNextSession.dateInterval?.start.formatted(date: .omitted, time: .shortened) ?? "")) \(nextNextSession.title)\(nextNextSession.speaker.isEmpty ? "" : " - \(nextNextSession.speaker)")"
             )
             .font(.subheadline)
-            .foregroundStyle(Color(.iPlaygroundYellow))
+            .foregroundStyle(theme.secondary)
           }
         }
       }
@@ -87,8 +88,8 @@ struct NowWidgetEntryView: View {
   private var afterEventView: some View {
     Text(
       """
-      \(Text(verbatim: "iPlayground").foregroundStyle(Color(.iPlaygroundBlue))) \(Text(verbatim: IPlaygroundEvent.yearString).foregroundStyle(Color(.iPlaygroundYellow)))
-      \(Text("活動已結束，感謝您的參與！").foregroundStyle(Color(.iPlaygroundPink)))
+      \(Text(verbatim: "iPlayground").foregroundStyle(theme.primary)) \(Text(verbatim: IPlaygroundEvent.yearString).foregroundStyle(theme.secondary))
+      \(Text("活動已結束，感謝您的參與！").foregroundStyle(theme.tertiary))
       """
     )
     .font(.headline)

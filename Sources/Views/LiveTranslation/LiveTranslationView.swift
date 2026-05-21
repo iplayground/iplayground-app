@@ -6,6 +6,7 @@ import SwiftUI
 package struct LiveTranslationView: View {
   @Bindable package var store: StoreOf<LiveTranslationFeature>
   @State private var autoScroll = true
+  @Environment(\.iPlaygroundTheme) private var theme
   private let messageBottomID = "_messageBottom"
 
   package init(store: StoreOf<LiveTranslationFeature>) {
@@ -140,6 +141,7 @@ package struct LiveTranslationView: View {
             Image(systemName: autoScroll ? "arrow.down.circle.fill" : "arrow.down.circle")
               .imageScale(.large)
               .font(.largeTitle)
+              .foregroundStyle(theme.tint)
               .padding()
           }
         )

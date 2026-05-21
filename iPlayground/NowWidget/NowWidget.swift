@@ -15,8 +15,10 @@ struct NowWidget: Widget {
 
   var body: some WidgetConfiguration {
     StaticConfiguration(kind: kind, provider: Provider()) { entry in
+      let theme = IPlaygroundTheme.current
       NowWidgetEntryView(entry: entry)
-        .containerBackground(Color(.widgetBackground), for: .widget)
+        .environment(\.iPlaygroundTheme, theme)
+        .containerBackground(theme.widgetBackground, for: .widget)
     }
     .configurationDisplayName("iPlayground")
     .description(String(localized: "議程與活動"))

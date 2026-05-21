@@ -6,9 +6,5 @@
     <array>
         <string>group.com.ethanhuang13.iPlayground</string>
     </array>
-    <key>com.apple.security.app-sandbox</key>
-    <true/>
-    <key>com.apple.security.files.user-selected.read-only</key>
-    <true/>
 </dict>
 </plist>

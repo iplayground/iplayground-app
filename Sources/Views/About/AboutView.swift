@@ -24,6 +24,8 @@ let initialMapPosition: MapCameraPosition = .region(
 package struct AboutView: View {
   @Bindable package var store: StoreOf<AboutFeature>
   @State private var lookAroundScene: MKLookAroundScene?
+  @Environment(\.iPlaygroundTheme) private var theme
+  @Environment(IPlaygroundThemeStore.self) private var themeStore
 
   package init(store: StoreOf<AboutFeature>) {
     self.store = store
@@ -60,15 +62,25 @@ package struct AboutView: View {
             .resizable()
             .frame(width: 80, height: 80)
             .clipShape(RoundedRectangle(cornerRadius: 16))
-          Text(verbatim: "iPlayground \(IPlaygroundEvent.yearString)")
-            .font(.title)
-            .monospaced()
+          aboutLogo
         }
         Spacer()
       }
       .textCase(.none)
       .padding(.top)
       .padding(.bottom, -13)
+    }
+  }
+
+  @ViewBuilder
+  private var aboutLogo: some View {
+    switch theme {
+    case .y2026:
+      IPlaygroundWordmark()
+    case .y2025:
+      Text(verbatim: "iPlayground \(IPlaygroundEvent.yearString)")
+        .font(.title)
+        .monospaced()
     }
   }
 
@@ -178,6 +190,20 @@ package struct AboutView: View {
   @ViewBuilder
   private var appInfoSection: some View {
     Section(String(localized: "App 資訊", bundle: .module)) {
+      HStack {
+        Label(String(localized: "主題", bundle: .module), systemImage: "paintpalette")
+        Spacer()
+        Picker("", selection: selectedTheme) {
+          ForEach(IPlaygroundTheme.allCases) { theme in
+            Text(verbatim: theme.displayName)
+              .tag(theme)
+          }
+        }
+        .labelsHidden()
+        .pickerStyle(.segmented)
+        .frame(width: 150)
+      }
+
       ForEach(appInfoLinks) { link in
         urlMenuButton(link: link)
       }
@@ -220,6 +246,7 @@ package struct AboutView: View {
           }
           Spacer()
           Image(systemName: "arrow.up.right.square")
+            .foregroundStyle(theme.tint)
         }
       },
       primaryAction: {
@@ -255,6 +282,14 @@ package struct AboutView: View {
   private var appInfoLinks: [Models.Link] {
     store.links.filter { link in
       link.type == .appInfo
+    }
+  }
+
+  private var selectedTheme: Binding<IPlaygroundTheme> {
+    Binding {
+      themeStore.selectedTheme
+    } set: { newValue in
+      themeStore.selectTheme(newValue)
     }
   }
 }
@@ -312,5 +347,6 @@ extension Models.Link {
         reducer: { AboutFeature() }
       )
     )
+    .environment(IPlaygroundThemeStore())
   }
 }

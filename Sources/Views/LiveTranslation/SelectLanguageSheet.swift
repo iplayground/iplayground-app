@@ -1,11 +1,13 @@
 import ComposableArchitecture
 import DependencyClients
 import Features
+import Models
 import SwiftUI
 
 @ViewAction(for: LiveTranslationFeature.self)
 package struct SelectLanguageSheet: View {
   @Bindable package var store: StoreOf<LiveTranslationFeature>
+  @Environment(\.iPlaygroundTheme) private var theme
 
   package init(store: StoreOf<LiveTranslationFeature>) {
     self.store = store
@@ -23,7 +25,7 @@ package struct SelectLanguageSheet: View {
 
               if lang.langCode == store.selectedLangCode {
                 Image(systemName: "checkmark")
-                  .foregroundColor(.blue)
+                  .foregroundStyle(theme.tint)
               }
             }
             .padding()

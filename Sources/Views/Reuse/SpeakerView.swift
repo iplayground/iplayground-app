@@ -13,6 +13,7 @@ import SwiftUI
 @ViewAction(for: SpeakerFeature.self)
 struct SpeakerView: View {
   let store: StoreOf<SpeakerFeature>
+  @Environment(\.iPlaygroundTheme) private var theme
 
   var body: some View {
     List {
@@ -61,18 +62,18 @@ struct SpeakerView: View {
               .clipShape(Circle())
           case .failure, .empty:
             Circle()
-              .fill(Color.gray.opacity(0.2))
+              .fill(theme.surface)
               .frame(width: avatarSize, height: avatarSize)
           @unknown default:
             Circle()
-              .fill(Color.gray.opacity(0.2))
+              .fill(theme.surface)
               .frame(width: avatarSize, height: avatarSize)
           }
         }
       } else {
         let avatarSize: CGFloat = 80
         Circle()
-          .fill(Color.gray.opacity(0.2))
+          .fill(theme.surface)
           .frame(width: avatarSize, height: avatarSize)
       }
     }

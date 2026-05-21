@@ -8,6 +8,7 @@ import SwiftUI
 struct TodayView: View {
   @Bindable var store: StoreOf<TodayFeature>
   @State private var nowSectionID: Int = 0
+  @Environment(\.iPlaygroundTheme) private var theme
 
   var body: some View {
     NavigationStack(
@@ -56,7 +57,7 @@ struct TodayView: View {
             )
             .buttonStyle(.plain)
             .padding()
-            .background(Color(.widgetBackground))
+            .background(theme.widgetBackground)
             .clipShape(RoundedRectangle(cornerRadius: 16))
             .padding(.horizontal)
             .padding(.bottom)
@@ -91,8 +92,8 @@ struct TodayView: View {
         HStack {
           Text(
             """
-            \(Text(verbatim: "iPlayground").foregroundStyle(Color(.iPlaygroundBlue))) \(Text(verbatim: IPlaygroundEvent.yearString).foregroundStyle(Color(.iPlaygroundYellow)))
-            \(Text(startDate, style: .relative).foregroundStyle(Color(.iPlaygroundPink)))
+            \(Text(verbatim: "iPlayground").foregroundStyle(theme.primary)) \(Text(verbatim: IPlaygroundEvent.yearString).foregroundStyle(theme.secondary))
+            \(Text(startDate, style: .relative).foregroundStyle(theme.tertiary))
             """
           )
           .font(.headline)
@@ -103,8 +104,8 @@ struct TodayView: View {
         HStack {
           Text(
             """
-            \(Text(verbatim: "iPlayground").foregroundStyle(Color(.iPlaygroundBlue))) \(Text(verbatim: IPlaygroundEvent.yearString).foregroundStyle(Color(.iPlaygroundYellow)))
-            \(Text("活動已結束，感謝您的參與！", bundle: .module).foregroundStyle(Color(.iPlaygroundPink)))
+            \(Text(verbatim: "iPlayground").foregroundStyle(theme.primary)) \(Text(verbatim: IPlaygroundEvent.yearString).foregroundStyle(theme.secondary))
+            \(Text("活動已結束，感謝您的參與！", bundle: .module).foregroundStyle(theme.tertiary))
             """
           )
           .font(.headline)
@@ -125,7 +126,7 @@ struct TodayView: View {
                 bundle: .module
               )
               .font(.headline)
-              .foregroundStyle(Color(.iPlaygroundBlue))
+              .foregroundStyle(theme.primary)
             }
 
             if let nextSession = store.nextSession {
@@ -134,7 +135,7 @@ struct TodayView: View {
                 bundle: .module
               )
               .font(.subheadline)
-              .foregroundStyle(Color(.iPlaygroundPink))
+              .foregroundStyle(theme.tertiary)
             }
 
             if let nextNextSession = store.nextNextSession {
@@ -143,7 +144,7 @@ struct TodayView: View {
                 bundle: .module
               )
               .font(.subheadline)
-              .foregroundStyle(Color(.iPlaygroundYellow))
+              .foregroundStyle(theme.secondary)
             }
           }
           Spacer()
@@ -182,16 +183,16 @@ struct TodayView: View {
               sessionCell(session)
               Spacer()
               Image(systemName: "chevron.right")
-                .foregroundStyle(Color(.accent))
+                .foregroundStyle(theme.tint)
             }
           }
         )
         .listRowBackground(
-          Color(.widgetBackground).opacity(session.id == currentSessionID ? 1.0 : 0))
+          theme.widgetBackground.opacity(session.id == currentSessionID ? 1.0 : 0))
       } else {
         sessionCell(session)
           .listRowBackground(
-            Color(.widgetBackground).opacity(session.id == currentSessionID ? 1.0 : 0))
+            theme.widgetBackground.opacity(session.id == currentSessionID ? 1.0 : 0))
       }
     }
   }

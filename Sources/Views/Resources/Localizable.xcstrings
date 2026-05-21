@@ -498,6 +498,22 @@
         }
       }
     },
+    "主題" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Theme"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "テーマ"
+          }
+        }
+      }
+    },
     "特別贊助" : {
       "localizations" : {
         "en" : {
