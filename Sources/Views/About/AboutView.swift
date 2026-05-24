@@ -58,7 +58,7 @@ package struct AboutView: View {
       HStack {
         Spacer()
         VStack(alignment: .center) {
-          Image(.iPlayground)
+          appIcon
             .resizable()
             .frame(width: 80, height: 80)
             .clipShape(RoundedRectangle(cornerRadius: 16))
@@ -69,6 +69,15 @@ package struct AboutView: View {
       .textCase(.none)
       .padding(.top)
       .padding(.bottom, -13)
+    }
+  }
+
+  private var appIcon: Image {
+    switch theme {
+    case .y2026:
+      return Image("iPlayground-2026", bundle: .module)
+    case .y2025:
+      return Image("iPlayground-2025", bundle: .module)
     }
   }
 
