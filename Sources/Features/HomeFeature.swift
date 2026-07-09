@@ -16,6 +16,7 @@ package struct HomeFeature {
     @Shared(.links) package var links: [Link] = []
 
     package var today = TodayFeature.State()
+    package var liveCaption = LiveCaptionFeature.State()
     package var community = CommunityFeature.State()
     package var my = MyFeature.State()
     package var about = AboutFeature.State()
@@ -25,6 +26,7 @@ package struct HomeFeature {
 
   package enum Action: Equatable, BindableAction {
     case today(TodayFeature.Action)
+    case liveCaption(LiveCaptionFeature.Action)
     case community(CommunityFeature.Action)
     case my(MyFeature.Action)
     case about(AboutFeature.Action)
@@ -42,6 +44,9 @@ package struct HomeFeature {
     Scope(state: \.today, action: \.today) {
       TodayFeature()
     }
+    Scope(state: \.liveCaption, action: \.liveCaption) {
+      LiveCaptionFeature()
+    }
     Scope(state: \.community, action: \.community) {
       CommunityFeature()
     }
@@ -58,6 +63,9 @@ package struct HomeFeature {
   package func core(state: inout State, action: Action) -> Effect<Action> {
     switch action {
     case .today:
+      return .none
+
+    case .liveCaption:
       return .none
 
     case .community:

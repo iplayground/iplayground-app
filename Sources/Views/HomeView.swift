@@ -18,17 +18,23 @@ struct HomeView: View {
       )
       .tabItem { Label(String(localized: "議程與活動", bundle: .module), systemImage: "calendar") }
 
-      // Tab 2: Sponsors, Speakers, & Staff
+      // Tab 2: Live captions
+      LiveCaptionView(
+        store: store.scope(state: \.liveCaption, action: \.liveCaption)
+      )
+      .tabItem { Label(String(localized: "即時字幕", bundle: .module), systemImage: "captions.bubble") }
+
+      // Tab 3: Sponsors, Speakers, & Staff
       CommunityView(
         store: store.scope(state: \.community, action: \.community)
       )
       .tabItem { Label(String(localized: "社群", bundle: .module), systemImage: "person.3") }
 
-      // Tab 3: My
+      // Tab 4: My
       MyView(store: store.scope(state: \.my, action: \.my))
         .tabItem { Label(String(localized: "我的", bundle: .module), systemImage: "bookmark") }
 
-      // Tab 4: About
+      // Tab 5: About
       AboutView(
         store: store.scope(state: \.about, action: \.about)
       )

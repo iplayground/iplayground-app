@@ -4,6 +4,9 @@
     "" : {
       "shouldTranslate" : false
     },
+    "#%lld" : {
+
+    },
     "%@ %@\n%@" : {
       "localizations" : {
         "zh-Hant" : {
@@ -218,6 +221,12 @@
         }
       }
     },
+    "Portal 上線後會自動更新。" : {
+
+    },
+    "Portal 尚未上線" : {
+
+    },
     "Privacy Policy" : {
       "localizations" : {
         "en" : {
@@ -262,6 +271,22 @@
         }
       }
     },
+    "主題" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Theme"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "テーマ"
+          }
+        }
+      }
+    },
     "個人贊助" : {
       "localizations" : {
         "en" : {
@@ -277,6 +302,9 @@
           }
         }
       }
+    },
+    "即時字幕" : {
+
     },
     "即時翻譯" : {
       "localizations" : {
@@ -306,6 +334,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "キャンセル"
+          }
+        }
+      }
+    },
+    "可用：%@ / %@" : {
+      "localizations" : {
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "可用：%1$@ / %2$@"
           }
         }
       }
@@ -357,6 +395,27 @@
           }
         }
       }
+    },
+    "字幕" : {
+
+    },
+    "字幕 session 已停止" : {
+
+    },
+    "字幕 session 進行中" : {
+
+    },
+    "字幕設定" : {
+
+    },
+    "字幕軌道" : {
+
+    },
+    "尚未收到字幕可用性狀態" : {
+
+    },
+    "尚無字幕" : {
+
     },
     "工作人員" : {
       "localizations" : {
@@ -450,6 +509,9 @@
         }
       }
     },
+    "收到字幕事件後會顯示在這裡。" : {
+
+    },
     "政大公企中心" : {
       "localizations" : {
         "en" : {
@@ -465,6 +527,12 @@
           }
         }
       }
+    },
+    "模式" : {
+
+    },
+    "正在連線" : {
+
     },
     "活動已結束，感謝您的參與！" : {
       "localizations" : {
@@ -494,22 +562,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "アプリバージョン"
-          }
-        }
-      }
-    },
-    "主題" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Theme"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "テーマ"
           }
         }
       }
@@ -642,6 +694,15 @@
         }
       }
     },
+    "等待 Portal 狀態" : {
+
+    },
+    "等待字幕" : {
+
+    },
+    "等待字幕 session" : {
+
+    },
     "網站" : {
       "localizations" : {
         "en" : {
@@ -657,6 +718,9 @@
           }
         }
       }
+    },
+    "語言" : {
+
     },
     "講者" : {
       "localizations" : {
@@ -722,6 +786,9 @@
         }
       }
     },
+    "連線中" : {
+
+    },
     "選擇語言" : {
       "localizations" : {
         "en" : {
@@ -753,6 +820,9 @@
           }
         }
       }
+    },
+    "重新連線中" : {
+
     },
     "重要連結" : {
       "localizations" : {
