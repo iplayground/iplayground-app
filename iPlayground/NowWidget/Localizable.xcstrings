@@ -56,6 +56,12 @@
             "state" : "translated",
             "value" : "행사가 종료되었습니다. 참여해 주셔서 감사합니다!"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "活动已结束，感谢您的参与！"
+          }
         }
       }
     },
@@ -77,6 +83,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "세션 및 활동"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "议程与活动"
           }
         }
       }

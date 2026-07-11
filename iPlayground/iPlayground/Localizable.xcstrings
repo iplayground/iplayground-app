@@ -21,6 +21,12 @@
             "state" : "translated",
             "value" : "iPlayground"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "iPlayground"
+          }
         }
       }
     }

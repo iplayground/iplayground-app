@@ -47,6 +47,12 @@
             "value" : "👉 %1$@%2$@ (남은 시간: %3$@)"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "👉 %1$@%2$@（剩余：%3$@）"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -85,6 +91,12 @@
             "state" : "translated",
             "value" : "앱 정보"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "App 信息"
+          }
         }
       }
     },
@@ -106,6 +118,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "행동 수칙"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "行为准则"
           }
         },
         "zh-Hant" : {
@@ -136,6 +154,12 @@
             "value" : "HackMD 공동 편집 노트 목록"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HackMD 协作笔记目录"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -163,6 +187,12 @@
             "state" : "translated",
             "value" : "KKTIX"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "KKTIX"
+          }
         }
       }
     },
@@ -185,6 +215,12 @@
             "state" : "translated",
             "value" : "라이트닝 토크"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "闪电演讲"
+          }
         }
       }
     },
@@ -206,6 +242,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "뉴스레터"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "电子报"
           }
         },
         "zh-Hant" : {
@@ -236,6 +278,12 @@
             "value" : "행사 전 안내"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "参会须知"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -262,6 +310,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "오픈 소스 라이선스"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "开源许可"
           }
         },
         "zh-Hant" : {
@@ -292,6 +346,12 @@
             "value" : "개인정보 처리방침"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "隐私政策"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -318,6 +378,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "공식 웹사이트"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "官方网站"
           }
         },
         "zh-Hant" : {
@@ -347,6 +413,12 @@
             "state" : "translated",
             "value" : "개인 후원"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "个人赞助"
+          }
         }
       }
     },
@@ -368,6 +440,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "실시간 번역"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "实时翻译"
           }
         }
       }
@@ -391,6 +469,12 @@
             "state" : "translated",
             "value" : "취소"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "取消"
+          }
         }
       }
     },
@@ -412,6 +496,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "대만 타이베이시 다안구 진화제 187호"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "台北市大安区金华街 187 号"
           }
         }
       }
@@ -435,6 +525,12 @@
             "state" : "translated",
             "value" : "파트너"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "合作伙伴"
+          }
         }
       }
     },
@@ -456,6 +552,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "행사장"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "会场"
           }
         }
       }
@@ -479,6 +581,12 @@
             "state" : "translated",
             "value" : "스태프"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "工作人员"
+          }
         }
       }
     },
@@ -501,6 +609,12 @@
             "state" : "translated",
             "value" : "내 링크"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "我的"
+          }
         }
       }
     },
@@ -522,6 +636,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Apple 지도에서 열기"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在 Apple 地图中打开"
           }
         },
         "zh-Hant" : {
@@ -552,6 +672,12 @@
             "value" : "Google 지도에서 열기"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在 Google 地图中打开"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -579,6 +705,12 @@
             "state" : "translated",
             "value" : "복사"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "复制"
+          }
         }
       }
     },
@@ -600,6 +732,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "국립정치대학교 공공·기업행정교육센터"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "政大公企中心"
           }
         }
       }
@@ -623,6 +761,12 @@
             "state" : "translated",
             "value" : "행사가 종료되었습니다. 참여해 주셔서 감사합니다!"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "活动已结束，感谢您的参与！"
+          }
         }
       }
     },
@@ -644,6 +788,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "버전 정보"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "版本信息"
           }
         }
       }
@@ -667,6 +817,12 @@
             "state" : "translated",
             "value" : "테마"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "主题"
+          }
         }
       }
     },
@@ -688,6 +844,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "특별 후원"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "特别赞助"
           }
         }
       }
@@ -711,6 +873,12 @@
             "state" : "translated",
             "value" : "세션이 시작되면 번역이 여기에 표시됩니다"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "议程开始后，翻译将显示在这里"
+          }
         }
       }
     },
@@ -732,6 +900,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "오류가 발생했습니다"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "发生错误"
           }
         }
       }
@@ -755,6 +929,12 @@
             "state" : "translated",
             "value" : "실버 스폰서"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "白银级赞助商"
+          }
         }
       }
     },
@@ -776,6 +956,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "커뮤니티"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "社区"
           }
         }
       }
@@ -799,6 +985,12 @@
             "state" : "translated",
             "value" : "소셜 미디어"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "社交媒体"
+          }
         }
       }
     },
@@ -820,6 +1012,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "1일 차"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "第 1 天"
           }
         }
       }
@@ -843,6 +1041,12 @@
             "state" : "translated",
             "value" : "2일 차"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "第 2 天"
+          }
         }
       }
     },
@@ -864,6 +1068,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "웹사이트"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "网站"
           }
         }
       }
@@ -887,6 +1097,12 @@
             "state" : "translated",
             "value" : "발표자"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "讲者"
+          }
         }
       }
     },
@@ -908,6 +1124,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "세션 및 활동"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "议程与活动"
           }
         }
       }
@@ -931,6 +1153,12 @@
             "state" : "translated",
             "value" : "불러오는 중…"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "加载中…"
+          }
         }
       }
     },
@@ -952,6 +1180,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "스폰서"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "赞助商"
           }
         }
       }
@@ -975,6 +1209,12 @@
             "state" : "translated",
             "value" : "언어 선택"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "选择语言"
+          }
         }
       }
     },
@@ -996,6 +1236,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "아직 메시지가 없습니다"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "暂无消息"
           }
         }
       }
@@ -1019,6 +1265,12 @@
             "state" : "translated",
             "value" : "중요 링크"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "重要链接"
+          }
         }
       }
     },
@@ -1040,6 +1292,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "다시 시도"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "重试"
           }
         }
       }
@@ -1063,6 +1321,12 @@
             "state" : "translated",
             "value" : "다이아몬드 스폰서"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "钻石级赞助商"
+          }
         }
       }
     },
@@ -1085,6 +1349,12 @@
             "state" : "translated",
             "value" : "앱 정보"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "关于"
+          }
         }
       }
     },
@@ -1106,6 +1376,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "브론즈 스폰서"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "青铜级赞助商"
           }
         }
       }
