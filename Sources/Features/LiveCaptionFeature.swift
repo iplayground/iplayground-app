@@ -21,16 +21,21 @@ package struct LiveCaptionFeature {
     package var availableLanguages: [LiveCaptionLanguage] = []
     package var portalStatus: LiveCaptionPortalStatus?
     package var sessionStatus: LiveCaptionSessionStatus?
+    package var activeSessionID: String?
     package var captions: [LiveCaptionItem] = []
     package var connectionState: LiveCaptionConnectionState = .idle
     package var errorMessage: String?
     package var expiresAt: Date?
+    package var isShowingLanguageSheet = false
+    package var didFallbackSelection = false
 
     package init() {}
 
     package var displayedCaptions: [LiveCaptionItem] {
       captions.filter { item in
-        item.captionMode == selectedMode && item.text(for: selectedLanguage) != nil
+        item.sessionId == activeSessionID
+          && item.captionMode == selectedMode
+          && item.text(for: selectedLanguage) != nil
       }
     }
 
@@ -61,6 +66,9 @@ package struct LiveCaptionFeature {
       case changeTrackNumber(Int)
       case changeCaptionMode(LiveCaptionMode)
       case changeLanguage(LiveCaptionLanguage)
+      case showLanguageSheet
+      case hideLanguageSheet
+      case dismissAvailabilityNotice
       case reconnect
     }
   }
@@ -88,6 +96,7 @@ package struct LiveCaptionFeature {
         state.trackNumber = sanitizedTrackNumber
         state.portalStatus = nil
         state.sessionStatus = nil
+        state.activeSessionID = nil
         state.availableModes = []
         state.availableLanguages = []
         state.captions = []
@@ -99,6 +108,19 @@ package struct LiveCaptionFeature {
 
       case let .changeLanguage(language):
         state.selectedLanguage = language
+        state.isShowingLanguageSheet = false
+        return .none
+
+      case .showLanguageSheet:
+        state.isShowingLanguageSheet = true
+        return .none
+
+      case .hideLanguageSheet:
+        state.isShowingLanguageSheet = false
+        return .none
+
+      case .dismissAvailabilityNotice:
+        state.didFallbackSelection = false
         return .none
 
       case .reconnect:
@@ -140,6 +162,12 @@ package struct LiveCaptionFeature {
         return .none
 
       case let .caption(caption):
+        if let activeSessionID = state.activeSessionID,
+          caption.sessionId != activeSessionID
+        {
+          return .none
+        }
+        state.activeSessionID = caption.sessionId
         upsert(caption, state: &state)
         return .none
       }
@@ -155,14 +183,37 @@ package struct LiveCaptionFeature {
       state.portalStatus = controlEvent.portalStatus
       if controlEvent.portalStatus == .offline {
         state.sessionStatus = nil
+        state.activeSessionID = nil
         state.availableModes = []
         state.availableLanguages = []
+        state.captions = []
       }
 
     case .sessionStatus:
-      state.sessionStatus = controlEvent.sessionStatus
+      guard let sessionStatus = controlEvent.sessionStatus else { return }
+      if sessionStatus == .started,
+        let sessionID = controlEvent.sessionId,
+        sessionID != state.activeSessionID
+      {
+        state.activeSessionID = sessionID
+        state.captions = []
+      }
+      if sessionStatus == .stopped,
+        let sessionID = controlEvent.sessionId,
+        let activeSessionID = state.activeSessionID,
+        sessionID != activeSessionID
+      {
+        return
+      }
+      state.sessionStatus = sessionStatus
 
     case .captionAvailability:
+      if let sessionID = controlEvent.sessionId,
+        let activeSessionID = state.activeSessionID,
+        sessionID != activeSessionID
+      {
+        return
+      }
       state.availableModes = controlEvent.availableCaptionModes ?? []
       state.availableLanguages = controlEvent.availableLanguages ?? []
       reconcileSelections(state: &state)
@@ -170,6 +221,9 @@ package struct LiveCaptionFeature {
   }
 
   private func reconcileSelections(state: inout State) {
+    let previousMode = state.selectedMode
+    let previousLanguage = state.selectedLanguage
+
     if !state.availableModes.isEmpty && !state.availableModes.contains(state.selectedMode) {
       state.selectedMode =
         state.availableModes.contains(.accurate) ? .accurate : state.availableModes[0]
@@ -184,6 +238,10 @@ package struct LiveCaptionFeature {
         ? preferredLanguage
         : state.availableLanguages[0]
     }
+
+    if state.selectedMode != previousMode || state.selectedLanguage != previousLanguage {
+      state.didFallbackSelection = true
+    }
   }
 
   private func upsert(_ caption: LiveCaptionItem, state: inout State) {
@@ -193,13 +251,7 @@ package struct LiveCaptionFeature {
       state.captions.append(caption)
     }
 
-    state.captions.sort { lhs, rhs in
-      if lhs.sessionId == rhs.sessionId {
-        return lhs.sequence < rhs.sequence
-      } else {
-        return lhs.sessionId < rhs.sessionId
-      }
-    }
+    state.captions.sort { $0.sequence < $1.sequence }
     state.captions = Array(state.captions.suffix(100))
   }
 
