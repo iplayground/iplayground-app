@@ -329,7 +329,7 @@ extension Models.Link {
     case "facebook":
       return "Facebook"
     case "app-source":
-      return "iplayground-app-2025"
+      return "iplayground-app"
     case "session-data-source":
       return "SessionData"
     case "app-store":
