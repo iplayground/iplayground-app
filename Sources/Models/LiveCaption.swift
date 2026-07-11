@@ -25,19 +25,6 @@ public struct LiveCaptionMode: RawRepresentable, Codable, Equatable, Hashable, I
   }
 }
 
-extension LiveCaptionMode {
-  public var displayName: String {
-    switch rawValue {
-    case Self.accurate.rawValue:
-      return String(localized: "精準")
-    case Self.fast.rawValue:
-      return String(localized: "快速")
-    default:
-      return rawValue
-    }
-  }
-}
-
 public struct LiveCaptionLanguage: RawRepresentable, Codable, Equatable, Hashable, Identifiable,
   Sendable
 {
@@ -62,23 +49,6 @@ public struct LiveCaptionLanguage: RawRepresentable, Codable, Equatable, Hashabl
   public func encode(to encoder: Encoder) throws {
     var container = encoder.singleValueContainer()
     try container.encode(rawValue)
-  }
-}
-
-extension LiveCaptionLanguage {
-  public var displayName: String {
-    switch rawValue {
-    case Self.zhHant.rawValue:
-      return String(localized: "繁體中文")
-    case Self.en.rawValue:
-      return String(localized: "英文")
-    case Self.ja.rawValue:
-      return String(localized: "日文")
-    case Self.ko.rawValue:
-      return String(localized: "韓文")
-    default:
-      return rawValue
-    }
   }
 }
 
@@ -194,5 +164,50 @@ extension LiveCaptionServerEvent: Decodable {
     case .caption:
       self = .caption(try LiveCaptionItem(from: decoder))
     }
+  }
+}
+
+extension LiveCaptionServerEvent {
+  public static func decode(from data: Data) throws -> Self {
+    try LiveCaptionJSON.decode(Self.self, from: data)
+  }
+}
+
+public enum LiveCaptionJSON {
+  public static func decode<Value: Decodable>(
+    _ type: Value.Type,
+    from data: Data
+  ) throws -> Value {
+    try makeDecoder().decode(type, from: data)
+  }
+
+  private static func makeDecoder() -> JSONDecoder {
+    let decoder = JSONDecoder()
+    decoder.dateDecodingStrategy = .custom { decoder in
+      let container = try decoder.singleValueContainer()
+      let string = try container.decode(String.self)
+
+      if let date = iso8601Date(
+        from: string,
+        formatOptions: [.withInternetDateTime, .withFractionalSeconds]
+      ) ?? iso8601Date(from: string, formatOptions: [.withInternetDateTime]) {
+        return date
+      }
+
+      throw DecodingError.dataCorruptedError(
+        in: container,
+        debugDescription: "Invalid ISO 8601 date: \(string)"
+      )
+    }
+    return decoder
+  }
+
+  private static func iso8601Date(
+    from string: String,
+    formatOptions: ISO8601DateFormatter.Options
+  ) -> Date? {
+    let formatter = ISO8601DateFormatter()
+    formatter.formatOptions = formatOptions
+    return formatter.date(from: string)
   }
 }

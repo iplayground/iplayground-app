@@ -60,7 +60,7 @@ private enum LiveCaptionRelay {
       throw LiveCaptionRelayError.negotiateFailed
     }
 
-    return try makeJSONDecoder().decode(NegotiationResponse.self, from: data)
+    return try LiveCaptionJSON.decode(NegotiationResponse.self, from: data)
   }
 
   static func receiveEvents(
@@ -74,19 +74,26 @@ private enum LiveCaptionRelay {
       webSocket.cancel(with: .goingAway, reason: nil)
     }
 
-    while !Task.isCancelled {
-      let refreshDate = expiresAt.addingTimeInterval(-refreshLeadTime)
-      let secondsUntilRefresh = max(1, refreshDate.timeIntervalSinceNow)
-      let result = try await receiveOrRefresh(webSocket: webSocket, seconds: secondsUntilRefresh)
+    try await withTaskCancellationHandler {
+      while !Task.isCancelled {
+        let refreshDate = expiresAt.addingTimeInterval(-refreshLeadTime)
+        let secondsUntilRefresh = max(1, refreshDate.timeIntervalSinceNow)
+        let result = try await receiveOrRefresh(
+          webSocket: webSocket,
+          seconds: secondsUntilRefresh
+        )
 
-      switch result {
-      case let .event(event):
-        continuation.yield(.event(event))
+        switch result {
+        case let .event(event):
+          continuation.yield(.event(event))
 
-      case .refreshDue:
-        continuation.yield(.disconnected)
-        return
+        case .refreshDue:
+          continuation.yield(.disconnected)
+          return
+        }
       }
+    } onCancel: {
+      webSocket.cancel(with: .goingAway, reason: nil)
     }
   }
 
@@ -100,6 +107,7 @@ private enum LiveCaptionRelay {
       }
       group.addTask {
         try await Task.sleep(for: .milliseconds(Int64(seconds * 1000)))
+        webSocket.cancel(with: .goingAway, reason: nil)
         return .refreshDue
       }
 
@@ -117,49 +125,14 @@ private enum LiveCaptionRelay {
       guard let data = string.data(using: .utf8) else {
         throw LiveCaptionRelayError.invalidMessage
       }
-      return try makeJSONDecoder().decode(LiveCaptionServerEvent.self, from: data)
+      return try LiveCaptionServerEvent.decode(from: data)
 
     case let .data(data):
-      return try makeJSONDecoder().decode(LiveCaptionServerEvent.self, from: data)
+      return try LiveCaptionServerEvent.decode(from: data)
 
     @unknown default:
       throw LiveCaptionRelayError.invalidMessage
     }
-  }
-
-  private static func makeJSONDecoder() -> JSONDecoder {
-    let decoder = JSONDecoder()
-    decoder.dateDecodingStrategy = .custom { decoder in
-      let container = try decoder.singleValueContainer()
-      let string = try container.decode(String.self)
-
-      if let date = iso8601Date(
-        from: string,
-        formatOptions: [
-          .withInternetDateTime, .withFractionalSeconds,
-        ])
-      {
-        return date
-      }
-      if let date = iso8601Date(from: string, formatOptions: [.withInternetDateTime]) {
-        return date
-      }
-
-      throw DecodingError.dataCorruptedError(
-        in: container,
-        debugDescription: "Invalid ISO 8601 date: \(string)"
-      )
-    }
-    return decoder
-  }
-
-  private static func iso8601Date(
-    from string: String,
-    formatOptions: ISO8601DateFormatter.Options
-  ) -> Date? {
-    let formatter = ISO8601DateFormatter()
-    formatter.formatOptions = formatOptions
-    return formatter.date(from: string)
   }
 }
 
@@ -169,7 +142,6 @@ private struct NegotiateRequest: Encodable {
 
 private struct NegotiationResponse: Decodable {
   var url: URL
-  var hub: String
   var expiresAt: Date
 }
 
