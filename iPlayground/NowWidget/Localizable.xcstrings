@@ -42,7 +42,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The conference is over. Thanks for joining us!"
+            "value" : "The event has ended. Thank you for joining us!"
           }
         },
         "ja" : {
@@ -58,13 +58,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sessions"
+            "value" : "Sessions & Activities"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "セッション"
+            "value" : "セッションとアクティビティ"
           }
         }
       }

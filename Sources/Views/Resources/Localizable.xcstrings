@@ -103,13 +103,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "HackMD"
+            "value" : "HackMD Collaborative Notes"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "HackMD 共有ノート"
+            "value" : "HackMD 共同編集ノート一覧"
           }
         },
         "zh-Hant" : {
@@ -125,13 +125,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "My Ticket(KKTIX)"
+            "value" : "KKTIX"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "マイチケット(KKTIX)"
+            "value" : "KKTIX"
           }
         }
       }
@@ -179,13 +179,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Notice"
+            "value" : "Pre-event Notice"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "事前通知"
+            "value" : "事前案内"
           }
         },
         "zh-Hant" : {
@@ -321,7 +321,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "No. 187, Jinhua St., Da'an Dist., Taipei City, Taiwan"
+            "value" : "台湾台北市大安区金華街187号"
           }
         }
       }
@@ -461,7 +461,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "国立政治大学 CPBAE"
+            "value" : "国立政治大学公企センター"
           }
         }
       }
@@ -471,7 +471,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The conference is over. Thanks for joining us!"
+            "value" : "The event has ended. Thank you for joining us!"
           }
         },
         "ja" : {
@@ -487,13 +487,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "App Version"
+            "value" : "Version Information"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "アプリバージョン"
+            "value" : "バージョン情報"
           }
         }
       }
@@ -551,7 +551,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Error Occurred"
+            "value" : "An Error Occurred"
           }
         },
         "ja" : {
@@ -599,13 +599,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Social"
+            "value" : "Social Media"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ソーシャル"
+            "value" : "ソーシャルメディア"
           }
         }
       }
@@ -679,13 +679,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sessions"
+            "value" : "Sessions & Activities"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "セッション"
+            "value" : "セッションとアクティビティ"
           }
         }
       }
@@ -695,7 +695,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Loading..."
+            "value" : "Loading…"
           }
         },
         "ja" : {
@@ -813,7 +813,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "について"
+            "value" : "アプリについて"
           }
         }
       }
