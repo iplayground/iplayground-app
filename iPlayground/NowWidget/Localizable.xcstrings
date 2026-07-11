@@ -50,6 +50,12 @@
             "state" : "translated",
             "value" : "イベントは終了しました。ご参加ありがとうございました！"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "행사가 종료되었습니다. 참여해 주셔서 감사합니다!"
+          }
         }
       }
     },
@@ -65,6 +71,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "セッションとアクティビティ"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "세션 및 활동"
           }
         }
       }

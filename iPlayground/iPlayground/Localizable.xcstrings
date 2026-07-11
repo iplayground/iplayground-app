@@ -15,6 +15,12 @@
             "state" : "translated",
             "value" : "iPlayground"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "iPlayground"
+          }
         }
       }
     }
