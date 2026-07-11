@@ -7,6 +7,8 @@ import SwiftUI
 package struct LiveCaptionView: View {
   @Bindable package var store: StoreOf<LiveCaptionFeature>
   @Environment(\.iPlaygroundTheme) private var theme
+  @State private var autoScroll = true
+  private let messageBottomID = "_messageBottom"
 
   package init(store: StoreOf<LiveCaptionFeature>) {
     self.store = store
@@ -14,225 +16,170 @@ package struct LiveCaptionView: View {
 
   package var body: some View {
     NavigationStack {
-      List {
-        statusSection
-        settingsSection
-        captionsSection
+      Group {
+        if store.displayedCaptions.isEmpty {
+          emptyView
+        } else {
+          messageList
+        }
       }
-      .navigationTitle(String(localized: "即時字幕", bundle: .module))
+      .navigationTitle(Text("即時字幕", bundle: .module))
       .navigationBarTitleDisplayMode(.inline)
+      .toolbar {
+        ToolbarItem(placement: .topBarLeading) {
+          Button {
+            send(.showLanguageSheet)
+          } label: {
+            Image(systemName: "globe")
+          }
+          .accessibilityLabel(Text("選擇語言", bundle: .module))
+        }
+
+        if store.connectionState == .reconnecting {
+          ToolbarItem(placement: .topBarTrailing) {
+            ProgressView()
+              .accessibilityLabel(Text("重新連線中", bundle: .module))
+          }
+        }
+      }
       .task {
-        send(.task)
+        await send(.task).finish()
+      }
+      .sheet(isPresented: languageSheet) {
+        LiveCaptionLanguageSheet(store: store)
+          .presentationDetents([.medium, .large])
+      }
+      .alert(
+        Text("字幕選項已更新", bundle: .module),
+        isPresented: availabilityNotice
+      ) {
+        Button(String(localized: "好", bundle: .module)) {}
+      } message: {
+        Text("目前選擇不可用，已改用可用選項。", bundle: .module)
       }
     }
   }
 
   @ViewBuilder
-  private var statusSection: some View {
-    Section {
-      Label {
-        VStack(alignment: .leading, spacing: 4) {
-          Text(statusTitle)
-          if let statusDetail {
-            Text(statusDetail)
-              .font(.footnote)
-              .foregroundStyle(.secondary)
-          }
-        }
-      } icon: {
-        Image(systemName: statusIcon)
-          .foregroundStyle(statusColor)
-      }
-
-      if let errorMessage = store.errorMessage {
-        Text(errorMessage)
-          .font(.footnote)
-          .foregroundStyle(.secondary)
-      }
-    }
-  }
-
-  @ViewBuilder
-  private var settingsSection: some View {
-    Section(String(localized: "字幕設定", bundle: .module)) {
-      Stepper(value: trackNumber, in: 1...9) {
-        LabeledContent(String(localized: "字幕軌道", bundle: .module)) {
-          Text(verbatim: "\(store.trackNumber)")
-        }
-      }
-
-      Picker(String(localized: "模式", bundle: .module), selection: captionMode) {
-        ForEach(modeOptions) { mode in
-          Text(mode.displayName)
-            .tag(mode)
-        }
-      }
-
-      Picker(String(localized: "語言", bundle: .module), selection: language) {
-        ForEach(languageOptions) { language in
-          Text(language.displayName)
-            .tag(language)
-        }
-      }
-    }
-  }
-
-  @ViewBuilder
-  private var captionsSection: some View {
-    Section(String(localized: "字幕", bundle: .module)) {
-      let captions = store.displayedCaptions
-      if captions.isEmpty {
-        ContentUnavailableView(
-          emptyTitle,
-          systemImage: emptyIcon,
-          description: Text(emptyDescription)
-        )
-        .frame(maxWidth: .infinity)
-      } else {
-        ForEach(captions) { caption in
-          captionRow(caption)
-        }
-      }
-    }
-  }
-
-  @ViewBuilder
-  private func captionRow(_ caption: LiveCaptionItem) -> some View {
-    if let text = caption.text(for: store.selectedLanguage) {
-      VStack(alignment: .leading, spacing: 8) {
-        Text(text)
-          .font(.title3)
-          .fontWeight(.medium)
-          .textSelection(.enabled)
-
-        HStack(spacing: 8) {
-          Text("#\(caption.sequence)")
-          Text(caption.captionMode.displayName)
-          if let createdAt = caption.createdAt {
-            Text(createdAt, style: .time)
-          }
-        }
-        .font(.caption)
-        .foregroundStyle(.secondary)
-      }
-      .padding(.vertical, 4)
-    }
-  }
-
-  private var trackNumber: Binding<Int> {
-    Binding {
-      store.trackNumber
-    } set: { trackNumber in
-      send(.changeTrackNumber(trackNumber))
-    }
-  }
-
-  private var captionMode: Binding<LiveCaptionMode> {
-    Binding {
-      store.selectedMode
-    } set: { mode in
-      send(.changeCaptionMode(mode))
-    }
-  }
-
-  private var language: Binding<LiveCaptionLanguage> {
-    Binding {
-      store.selectedLanguage
-    } set: { language in
-      send(.changeLanguage(language))
-    }
-  }
-
-  private var modeOptions: [LiveCaptionMode] {
-    store.availableModes.isEmpty ? LiveCaptionMode.allCases : store.availableModes
-  }
-
-  private var languageOptions: [LiveCaptionLanguage] {
-    store.availableLanguages.isEmpty ? LiveCaptionLanguage.allCases : store.availableLanguages
-  }
-
-  private var statusTitle: String {
+  private var emptyView: some View {
     switch store.connectionState {
     case .idle, .connecting:
-      return String(localized: "連線中", bundle: .module)
-    case .reconnecting:
-      return String(localized: "重新連線中", bundle: .module)
-    case .connected:
-      switch store.portalStatus {
-      case .offline:
-        return String(localized: "Portal 尚未上線", bundle: .module)
-      case .online:
-        switch store.sessionStatus {
-        case .started:
-          return String(localized: "字幕 session 進行中", bundle: .module)
-        case .stopped:
-          return String(localized: "字幕 session 已停止", bundle: .module)
-        case nil:
-          return String(localized: "等待字幕 session", bundle: .module)
-        }
-      case nil:
-        return String(localized: "等待 Portal 狀態", bundle: .module)
-      }
-    }
-  }
+      ProgressView(String(localized: "讀取中…", bundle: .module))
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
 
-  private var statusDetail: String? {
-    if !store.availableModes.isEmpty || !store.availableLanguages.isEmpty {
-      return String(
-        localized:
-          "可用：\(store.availableModes.map(\.displayName).joined(separator: "、")) / \(store.availableLanguages.map(\.displayName).joined(separator: "、"))",
-        bundle: .module
+    case .reconnecting where store.errorMessage != nil:
+      ContentUnavailableView {
+        Label(
+          String(localized: "暫時無法連線", bundle: .module),
+          systemImage: "wifi.exclamationmark"
+        )
+      } description: {
+        Text("請稍後再試，字幕會自動重新連線。", bundle: .module)
+      } actions: {
+        Button(String(localized: "重試", bundle: .module)) {
+          send(.reconnect)
+        }
+        .buttonStyle(.bordered)
+      }
+
+    case .reconnecting:
+      ProgressView(String(localized: "重新連線中", bundle: .module))
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+
+    case .connected:
+      ContentUnavailableView(
+        emptyTitle,
+        systemImage: "captions.bubble",
+        description: Text(emptyDescription)
       )
     }
-
-    return String(localized: "尚未收到字幕可用性狀態", bundle: .module)
   }
 
-  private var statusIcon: String {
-    switch store.connectionState {
-    case .idle, .connecting, .reconnecting:
-      return "antenna.radiowaves.left.and.right"
-    case .connected:
-      if store.sessionStatus == .started {
-        return "captions.bubble.fill"
-      } else {
-        return "captions.bubble"
+  private var messageList: some View {
+    ScrollViewReader { proxy in
+      ScrollView {
+        LazyVStack(alignment: .leading, spacing: 0) {
+          ForEach(store.displayedCaptions) { caption in
+            if let text = caption.text(for: store.selectedLanguage) {
+              Text(text)
+                .font(.title3)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .multilineTextAlignment(.leading)
+                .textSelection(.enabled)
+                .padding()
+            }
+          }
+
+          Color.clear
+            .frame(height: 120)
+            .id(messageBottomID)
+        }
+      }
+      .onChange(of: store.displayedCaptions.last?.id) {
+        scrollToBottomIfNeeded(proxy)
+      }
+      .overlay(alignment: .bottomTrailing) {
+        Button {
+          autoScroll.toggle()
+          scrollToBottomIfNeeded(proxy)
+        } label: {
+          Image(systemName: autoScroll ? "arrow.down.circle.fill" : "arrow.down.circle")
+            .font(.largeTitle)
+            .padding()
+        }
+        .buttonStyle(.plain)
+        .foregroundStyle(theme.tint)
+        .accessibilityLabel(
+          Text(
+            autoScroll ? "停止自動捲動" : "開啟自動捲動",
+            bundle: .module
+          )
+        )
       }
     }
   }
 
-  private var statusColor: Color {
-    if store.connectionState == .connected && store.sessionStatus == .started {
-      return theme.tint
-    } else {
-      return .secondary
+  private var languageSheet: Binding<Bool> {
+    Binding {
+      store.isShowingLanguageSheet
+    } set: { isPresented in
+      if !isPresented {
+        send(.hideLanguageSheet)
+      }
+    }
+  }
+
+  private var availabilityNotice: Binding<Bool> {
+    Binding {
+      store.didFallbackSelection
+    } set: { isPresented in
+      if !isPresented {
+        send(.dismissAvailabilityNotice)
+      }
     }
   }
 
   private var emptyTitle: String {
-    switch store.connectionState {
-    case .idle, .connecting, .reconnecting:
-      return String(localized: "正在連線", bundle: .module)
-    case .connected:
-      if store.sessionStatus == .started {
-        return String(localized: "等待字幕", bundle: .module)
-      } else {
-        return String(localized: "尚無字幕", bundle: .module)
-      }
+    if store.sessionStatus == .started {
+      return String(localized: "等待字幕", bundle: .module)
+    } else {
+      return String(localized: "還沒有字幕", bundle: .module)
     }
   }
 
   private var emptyDescription: String {
-    switch store.portalStatus {
-    case .offline:
-      return String(localized: "Portal 上線後會自動更新。", bundle: .module)
-    default:
-      return String(localized: "收到字幕事件後會顯示在這裡。", bundle: .module)
+    if store.sessionStatus == .started {
+      return String(localized: "收到字幕後會顯示在這裡。", bundle: .module)
+    } else {
+      return String(localized: "當議程開始時，字幕將顯示在這裡。", bundle: .module)
     }
   }
 
-  private var emptyIcon: String {
-    "captions.bubble"
+  private func scrollToBottomIfNeeded(_ proxy: ScrollViewProxy) {
+    guard autoScroll else { return }
+    withAnimation(.spring) {
+      proxy.scrollTo(messageBottomID, anchor: .bottom)
+    }
   }
 }
 
