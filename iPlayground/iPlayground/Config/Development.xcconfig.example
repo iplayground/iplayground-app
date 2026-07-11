@@ -1,3 +1,2 @@
 // Development Configuration Template
 // Copy this file to Development.xcconfig and fill in your values
-LIVE_TRANSLATION_ROOM_NUMBER = your_room_number_here
