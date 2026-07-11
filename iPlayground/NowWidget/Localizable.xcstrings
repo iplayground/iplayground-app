@@ -42,13 +42,25 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The conference is over. Thanks for joining us!"
+            "value" : "The event has ended. Thank you for joining us!"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "イベントは終了しました。ご参加ありがとうございました！"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "행사가 종료되었습니다. 참여해 주셔서 감사합니다!"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "活动已结束，感谢您的参与！"
           }
         }
       }
@@ -58,13 +70,25 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sessions"
+            "value" : "Sessions & Activities"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "セッション"
+            "value" : "セッションとアクティビティ"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "세션 및 활동"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "议程与活动"
           }
         }
       }

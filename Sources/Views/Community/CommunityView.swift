@@ -32,9 +32,9 @@ struct CommunityView: View {
   private var rootView: some View {
     VStack(spacing: .zero) {
       tabs
-        .background {
-          store.selectedTab.backgroundColor(theme: theme)
-        }
+        .background(
+          theme == .y2025 ? store.selectedTab.backgroundColor(theme: theme) : Color.clear
+        )
 
       switch store.selectedTab {
       case .sponsor:
