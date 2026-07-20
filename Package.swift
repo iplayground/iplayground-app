@@ -10,7 +10,7 @@ let appName = "App"
 let sessionData = SourceControlDependency(
   package: .package(
     url: "https://github.com/iplayground/SessionData",
-    revision: "b943f8221aba1270c5eaf2ccabc3d6839d9b3cdd"
+    exact: "2026.0.0"
   ),
   productName: "SessionData"
 )
