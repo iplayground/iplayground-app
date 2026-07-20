@@ -16,7 +16,7 @@ final class TodayFeatureTests: XCTestCase {
     let store = TestStore(initialState: TodayFeature.State()) {
       TodayFeature()
     } withDependencies: {
-      $0.iPlaygroundDataClient.fetchSchedules = { day, _ in
+      $0.iPlaygroundDataClient.fetchAgenda = { day, _ in
         return []  // Return empty for simplicity
       }
       $0.date.now = createDate(year: 2025, month: 1, day: 15)

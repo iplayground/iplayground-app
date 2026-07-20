@@ -129,17 +129,17 @@ package struct TodayFeature {
           await withThrowingTaskGroup(of: Void.self) { group in
             group.addTask {
               @Dependency(\.iPlaygroundDataClient) var client
-              let cachedSessions = try await client.fetchSchedules(1, .cacheFirst)
-              async let sessions = try await client.fetchSchedules(1, .remote)
+              let cachedSessions = try await client.fetchAgenda(1, .cacheFirst)
+              async let sessions = try await client.fetchAgenda(1, .remote)
               let day1Date = IPlaygroundEvent.day1Date
 
               let cached = cachedSessions.map {
-                SessionWrapper(date: day1Date, session: $0)
+                SessionWrapper(date: day1Date, scheduledSession: $0)
               }
               await send(.loadedDay1Sessions(cached))
 
               let remoteSessions = try await sessions.map {
-                SessionWrapper(date: day1Date, session: $0)
+                SessionWrapper(date: day1Date, scheduledSession: $0)
               }
               if remoteSessions != cached {
                 await send(.loadedDay1Sessions(remoteSessions))
@@ -147,17 +147,17 @@ package struct TodayFeature {
             }
             group.addTask {
               @Dependency(\.iPlaygroundDataClient) var client
-              let cachedSessions = try await client.fetchSchedules(2, .cacheFirst)
-              async let sessions = try await client.fetchSchedules(2, .remote)
+              let cachedSessions = try await client.fetchAgenda(2, .cacheFirst)
+              async let sessions = try await client.fetchAgenda(2, .remote)
               let day2Date = IPlaygroundEvent.day2Date
 
               let cached = cachedSessions.map {
-                SessionWrapper(date: day2Date, session: $0)
+                SessionWrapper(date: day2Date, scheduledSession: $0)
               }
               await send(.loadedDay2Sessions(cached))
 
               let remoteSessions = try await sessions.map {
-                SessionWrapper(date: day2Date, session: $0)
+                SessionWrapper(date: day2Date, scheduledSession: $0)
               }
               if remoteSessions != cached {
                 await send(.loadedDay2Sessions(remoteSessions))
