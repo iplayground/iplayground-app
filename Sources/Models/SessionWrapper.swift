@@ -10,6 +10,8 @@ public struct SessionWrapper: Identifiable, Equatable, Hashable, Sendable {
   public let speakerID: Speaker.ID?
   public let tags: String?
   public let description: String?
+  public let isRecording: Bool?
+  public let isWorkshop: Bool
   public let hackMDURL: URL?
 
   public init(
@@ -20,7 +22,9 @@ public struct SessionWrapper: Identifiable, Equatable, Hashable, Sendable {
     speakerID: Speaker.ID?,
     tags: String?,
     description: String?,
-    hackMDURL: URL?
+    hackMDURL: URL?,
+    isRecording: Bool? = nil,
+    isWorkshop: Bool = false
   ) {
     self.timeRange = timeRange
     self.dateInterval = Self.parseDateInterval(from: timeRange, baseDate: date)
@@ -29,10 +33,12 @@ public struct SessionWrapper: Identifiable, Equatable, Hashable, Sendable {
     self.speakerID = speakerID
     self.tags = tags
     self.description = description?.decodedSessionDataLineBreaks
+    self.isRecording = isRecording
+    self.isWorkshop = isWorkshop
     self.hackMDURL = hackMDURL
   }
 
-  public init(date: Date, session: Session) {
+  public init(date: Date, session: Session, isWorkshop: Bool = false) {
     self.timeRange = session.time
     self.dateInterval = Self.parseDateInterval(from: session.time, baseDate: date)
     self.title = session.title
@@ -41,10 +47,20 @@ public struct SessionWrapper: Identifiable, Equatable, Hashable, Sendable {
     self.tags = session.tags.isEmpty ? nil : session.tags.joined(separator: " · ")
     self.description =
       session.description.isEmpty ? nil : session.description.decodedSessionDataLineBreaks
+    self.isRecording = session.isRecording
+    self.isWorkshop = isWorkshop
     self.hackMDURL = session.hackMD
   }
 
-  public init(session: Session) {
+  public init(date: Date, scheduledSession: ScheduledSession) {
+    self.init(
+      date: date,
+      session: scheduledSession.session,
+      isWorkshop: scheduledSession.isWorkshop
+    )
+  }
+
+  public init(session: Session, isWorkshop: Bool = false) {
     self.timeRange = session.time
     self.dateInterval = nil
     self.title = session.title
@@ -53,6 +69,8 @@ public struct SessionWrapper: Identifiable, Equatable, Hashable, Sendable {
     self.tags = session.tags.isEmpty ? nil : session.tags.joined(separator: " · ")
     self.description =
       session.description.isEmpty ? nil : session.description.decodedSessionDataLineBreaks
+    self.isRecording = session.isRecording
+    self.isWorkshop = isWorkshop
     self.hackMDURL = session.hackMD
   }
 
@@ -63,7 +81,9 @@ public struct SessionWrapper: Identifiable, Equatable, Hashable, Sendable {
     speakerID: Speaker.ID?,
     tags: String?,
     description: String?,
-    hackMDURL: URL?
+    hackMDURL: URL?,
+    isRecording: Bool? = nil,
+    isWorkshop: Bool = false
   ) {
     self.timeRange = timeRange
     self.dateInterval = nil
@@ -72,6 +92,8 @@ public struct SessionWrapper: Identifiable, Equatable, Hashable, Sendable {
     self.speakerID = speakerID
     self.tags = tags
     self.description = description?.decodedSessionDataLineBreaks
+    self.isRecording = isRecording
+    self.isWorkshop = isWorkshop
     self.hackMDURL = hackMDURL
   }
 

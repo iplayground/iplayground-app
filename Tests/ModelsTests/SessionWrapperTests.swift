@@ -277,6 +277,45 @@ struct SessionWrapperTests {
     #expect(wrapper.description == "First paragraph\n\nSecond paragraph")
   }
 
+  @Test("Preserve recording availability from SessionData")
+  func preserveRecordingAvailability() {
+    let recordingValues: [Bool?] = [false, true, nil]
+
+    for isRecording in recordingValues {
+      let session = Session(
+        time: "14:15 - 15:05",
+        title: "Mock Session",
+        tags: ["test"],
+        speaker: "Mock Speaker",
+        speakerID: 0,
+        description: "Mock Description",
+        isRecording: isRecording
+      )
+
+      #expect(SessionWrapper(session: session).isRecording == isRecording)
+    }
+  }
+
+  @Test("Preserve workshop status from scheduled session")
+  func preserveWorkshopStatus() {
+    let session = Session(
+      time: "15:15 - 16:45",
+      title: "Workshop",
+      tags: [],
+      speaker: "Test Speaker",
+      speakerID: 0,
+      description: "Test description"
+    )
+    let scheduledSession = ScheduledSession(session: session, isWorkshop: true)
+
+    let wrapper = SessionWrapper(
+      date: createDate(year: 2026, month: 7, day: 25),
+      scheduledSession: scheduledSession
+    )
+
+    #expect(wrapper.isWorkshop)
+  }
+
   private func createMockSession(time: String, hackMD: URL? = nil) -> Session {
     let jsonString: String
     if let hackMD = hackMD {
