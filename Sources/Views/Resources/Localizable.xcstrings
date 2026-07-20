@@ -787,6 +787,35 @@
         }
       }
     },
+    "工作坊" : {
+      "comment" : "Accessibility label for the hammer icon indicating a workshop schedule item.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Workshop"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ワークショップ"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "워크숍"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "工作坊"
+          }
+        }
+      }
+    },
     "快速" : {
       "localizations" : {
         "en" : {
@@ -991,6 +1020,35 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "政大公企中心"
+          }
+        }
+      }
+    },
+    "本場次無錄影" : {
+      "comment" : "Accessibility label for the icon indicating that a session will not be recorded.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No recording for this session"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "このセッションの録画はありません"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이 세션은 녹화되지 않습니다"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "本场次无录像"
           }
         }
       }

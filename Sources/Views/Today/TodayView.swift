@@ -200,9 +200,23 @@ struct TodayView: View {
   @ViewBuilder
   private func sessionCell(_ session: SessionWrapper) -> some View {
     VStack(alignment: .leading, spacing: 4) {
-      Text(session.timeRange)
-        .font(.footnote)
-        .foregroundColor(.secondary)
+      HStack(spacing: 4) {
+        if session.isWorkshop {
+          Image(systemName: "hammer.fill")
+            .foregroundStyle(theme.tint)
+            .accessibilityLabel(Text("工作坊", bundle: .module))
+        }
+
+        Text(session.timeRange)
+          .foregroundStyle(.secondary)
+
+        if session.isRecording == false {
+          Image(systemName: "video.slash.fill")
+            .foregroundStyle(.secondary)
+            .accessibilityLabel(Text("本場次無錄影", bundle: .module))
+        }
+      }
+      .font(.footnote)
 
       Text(session.title)
         .font(.headline)
