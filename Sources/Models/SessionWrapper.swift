@@ -28,7 +28,7 @@ public struct SessionWrapper: Identifiable, Equatable, Hashable, Sendable {
     self.speaker = speaker
     self.speakerID = speakerID
     self.tags = tags
-    self.description = description
+    self.description = description?.decodedSessionDataLineBreaks
     self.hackMDURL = hackMDURL
   }
 
@@ -39,7 +39,8 @@ public struct SessionWrapper: Identifiable, Equatable, Hashable, Sendable {
     self.speaker = session.speaker
     self.speakerID = session.speakerID
     self.tags = session.tags.isEmpty ? nil : session.tags.joined(separator: " · ")
-    self.description = session.description.isEmpty ? nil : session.description
+    self.description =
+      session.description.isEmpty ? nil : session.description.decodedSessionDataLineBreaks
     self.hackMDURL = session.hackMD
   }
 
@@ -50,7 +51,8 @@ public struct SessionWrapper: Identifiable, Equatable, Hashable, Sendable {
     self.speaker = session.speaker
     self.speakerID = session.speakerID
     self.tags = session.tags.isEmpty ? nil : session.tags.joined(separator: " · ")
-    self.description = session.description.isEmpty ? nil : session.description
+    self.description =
+      session.description.isEmpty ? nil : session.description.decodedSessionDataLineBreaks
     self.hackMDURL = session.hackMD
   }
 
@@ -69,7 +71,7 @@ public struct SessionWrapper: Identifiable, Equatable, Hashable, Sendable {
     self.speaker = speaker
     self.speakerID = speakerID
     self.tags = tags
-    self.description = description
+    self.description = description?.decodedSessionDataLineBreaks
     self.hackMDURL = hackMDURL
   }
 

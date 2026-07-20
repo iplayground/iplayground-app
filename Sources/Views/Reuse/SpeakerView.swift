@@ -99,7 +99,7 @@ struct SpeakerView: View {
 
   @ViewBuilder
   private var speakerIntro: some View {
-    Text(store.speaker.intro)
+    Text(store.speaker.intro.decodedSessionDataLineBreaks)
       .font(.body)
       .multilineTextAlignment(.leading)
   }

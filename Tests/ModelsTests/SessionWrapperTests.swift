@@ -261,6 +261,22 @@ struct SessionWrapperTests {
     #expect(wrapper.hackMDURL == nil)
   }
 
+  @Test("Convert SessionData line breaks in description")
+  func convertSessionDataLineBreaksInDescription() {
+    let session = Session(
+      time: "14:15 - 15:05",
+      title: "Mock Session",
+      tags: ["test"],
+      speaker: "Mock Speaker",
+      speakerID: 0,
+      description: "First paragraph<br><br>Second paragraph"
+    )
+
+    let wrapper = SessionWrapper(date: createDate(year: 2026, month: 7, day: 25), session: session)
+
+    #expect(wrapper.description == "First paragraph\n\nSecond paragraph")
+  }
+
   private func createMockSession(time: String, hackMD: URL? = nil) -> Session {
     let jsonString: String
     if let hackMD = hackMD {
