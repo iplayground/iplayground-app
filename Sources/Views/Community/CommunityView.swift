@@ -207,11 +207,14 @@ struct CommunityView: View {
       VStack(alignment: .leading) {
         Text(name)
           .font(.headline)
+          .lineLimit(nil)
+          .fixedSize(horizontal: false, vertical: true)
         if let title = title, title.isEmpty == false {
           Text(title)
             .font(.subheadline)
         }
       }
+      .layoutPriority(1)
       Spacer()
       switch navigationIndicator {
       case let .link(url):

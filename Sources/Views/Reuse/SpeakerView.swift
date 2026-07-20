@@ -23,7 +23,8 @@ struct SpeakerView: View {
           speakerName
           speakerTitle
         }
-        Spacer()
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .layoutPriority(1)
       }
 
       speakerIntro
@@ -84,6 +85,8 @@ struct SpeakerView: View {
     Text(store.speaker.name)
       .font(.title)
       .fontWeight(.bold)
+      .lineLimit(nil)
+      .fixedSize(horizontal: false, vertical: true)
   }
 
   @ViewBuilder
@@ -176,8 +179,8 @@ struct SpeakerView: View {
         initialState: .init(
           speaker: .init(
             id: 1,
-            name: "John Doe",
-            title: "Software Engineer",
+            name: "金玟庚 / Minkyung Kim",
+            title: "Learning Lead at Apple Developer Academy @ POSTECH",
             intro:
               "John is a software engineer with a passion for building scalable and efficient systems.",
             photo: URL(
