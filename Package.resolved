@@ -1,5 +1,5 @@
 {
-  "originHash" : "3bdc97db36cffecf547ffc64518fb82929402ba9c1ef8a22ce738eb234f0e03a",
+  "originHash" : "f4b2a3d7d7957b113535b73d597f6779a0cdbf3b5937c57f27449d27ece04ce1",
   "pins" : [
     {
       "identity" : "combine-schedulers",
@@ -8,6 +8,15 @@
       "state" : {
         "revision" : "dcccb979a2183b8df3334237e3dc1ae2b4116a86",
         "version" : "1.2.0"
+      }
+    },
+    {
+      "identity" : "sessiondata",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/iplayground/SessionData",
+      "state" : {
+        "branch" : "2026/v1",
+        "revision" : "b943f8221aba1270c5eaf2ccabc3d6839d9b3cdd"
       }
     },
     {
