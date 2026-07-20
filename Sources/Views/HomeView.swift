@@ -16,13 +16,13 @@ struct HomeView: View {
       TodayView(
         store: store.scope(state: \.today, action: \.today)
       )
-      .tabItem { Label(String(localized: "議程與活動", bundle: .module), systemImage: "calendar") }
+      .tabItem { Label(String(localized: "議程", bundle: .module), systemImage: "calendar") }
 
       // Tab 2: Live captions
       LiveCaptionView(
         store: store.scope(state: \.liveCaption, action: \.liveCaption)
       )
-      .tabItem { Label(String(localized: "即時字幕", bundle: .module), systemImage: "captions.bubble") }
+      .tabItem { Label(String(localized: "字幕", bundle: .module), systemImage: "captions.bubble") }
 
       // Tab 3: Sponsors, Speakers, & Staff
       CommunityView(

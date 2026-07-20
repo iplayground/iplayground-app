@@ -407,6 +407,18 @@
             "state" : "translated",
             "value" : "テーマ"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "테마"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "主题"
+          }
         }
       }
     },
@@ -494,31 +506,31 @@
         }
       }
     },
-    "即時翻譯" : {
-      "extractionState" : "stale",
+    "字幕" : {
+      "comment" : "Tab bar item title for live captions.",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Live Translation"
+            "value" : "Captions"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "リアルタイム翻訳"
+            "value" : "字幕"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "실시간 번역"
+            "value" : "자막"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "实时翻译"
+            "value" : "字幕"
           }
         }
       }
@@ -1151,64 +1163,6 @@
         }
       }
     },
-    "當議程開始時，翻譯將顯示在這裡" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "When sessions begin, translations will appear here"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "セッションが開始されると、翻訳がここに表示されます"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "세션이 시작되면 번역이 여기에 표시됩니다"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "议程开始后，翻译将显示在这里"
-          }
-        }
-      }
-    },
-    "發生錯誤" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "An Error Occurred"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "エラーが発生しました"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "오류가 발생했습니다"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "发生错误"
-          }
-        }
-      }
-    },
     "白銀級贊助商" : {
       "localizations" : {
         "en" : {
@@ -1573,6 +1527,35 @@
         }
       }
     },
+    "議程" : {
+      "comment" : "Tab bar item title for the event schedule.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schedule"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "スケジュール"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "일정"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "议程"
+          }
+        }
+      }
+    },
     "議程與活動" : {
       "localizations" : {
         "en" : {
@@ -1709,35 +1692,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "暂无字幕"
-          }
-        }
-      }
-    },
-    "還沒有訊息" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No messages yet"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "まだメッセージがありません"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "아직 메시지가 없습니다"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "暂无消息"
           }
         }
       }
