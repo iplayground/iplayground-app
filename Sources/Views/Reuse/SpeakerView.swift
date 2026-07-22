@@ -34,11 +34,9 @@ struct SpeakerView: View {
     .navigationTitle("講者")
     .navigationBarTitleDisplayMode(.inline)
     .toolbar {
-      if store.hackMDURL != nil {
+      if let hackMDURL = store.hackMDURL {
         ToolbarItem(placement: .topBarTrailing) {
-          Button(action: {
-            send(.tapHackMDButton)
-          }) {
+          Link(destination: hackMDURL) {
             Label("HackMD", systemImage: "note.text")
           }
         }
@@ -109,41 +107,21 @@ struct SpeakerView: View {
 
   @ViewBuilder
   private func urlMenuButton(url: URL, title: String) -> some View {
-    Menu(
-      content: {
-        copyURLButton(url: url)
-      },
-      label: {
-        HStack {
-          VStack(alignment: .leading) {
-            Text(title)
-              .font(.headline)
-            Text(url.absoluteString)
-              .font(.subheadline)
-              .foregroundColor(.secondary)
-          }
-          .multilineTextAlignment(.leading)
-          Spacer()
+    CopyableLink(destination: url) {
+      send(.tapCopyURL(url))
+    } label: {
+      HStack {
+        VStack(alignment: .leading) {
+          Text(title)
+            .font(.headline)
+          Text(url.absoluteString)
+            .font(.subheadline)
+            .foregroundColor(.secondary)
         }
-      },
-      primaryAction: {
-        send(.tapURL(url))
+        .multilineTextAlignment(.leading)
+        Spacer()
       }
-    )
-  }
-
-  @ViewBuilder
-  private func copyURLButton(url: URL) -> some View {
-    Button(
-      action: {
-        send(.tapCopyURL(url))
-      },
-      label: {
-        VStack {
-          Label("拷貝", systemImage: "document.on.document")
-        }
-      }
-    )
+    }
   }
 
   @ViewBuilder

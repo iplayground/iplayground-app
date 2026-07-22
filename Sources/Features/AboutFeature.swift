@@ -23,7 +23,6 @@ package struct AboutFeature {
     @CasePathable
     package enum ViewAction: Equatable {
       case task
-      case tapURL(URL)
       case tapCopyURL(URL)
     }
   }
@@ -57,12 +56,6 @@ package struct AboutFeature {
               await send(.versionInfoLoaded(appVersion: appVersion, buildNumber: buildNumber))
             }
           }
-        }
-
-      case let .tapURL(url):
-        return .run { _ in
-          @Dependency(\.openURL) var openURL
-          await openURL(url)
         }
 
       case let .tapCopyURL(url):
