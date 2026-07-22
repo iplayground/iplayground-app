@@ -13,6 +13,7 @@ import SwiftUI
 @ViewAction(for: SpeakerFeature.self)
 struct SpeakerView: View {
   let store: StoreOf<SpeakerFeature>
+  @Environment(\.iPlaygroundTheme) private var theme
 
   var body: some View {
     List {
@@ -22,7 +23,8 @@ struct SpeakerView: View {
           speakerName
           speakerTitle
         }
-        Spacer()
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .layoutPriority(1)
       }
 
       speakerIntro
@@ -61,18 +63,18 @@ struct SpeakerView: View {
               .clipShape(Circle())
           case .failure, .empty:
             Circle()
-              .fill(Color.gray.opacity(0.2))
+              .fill(theme.surface)
               .frame(width: avatarSize, height: avatarSize)
           @unknown default:
             Circle()
-              .fill(Color.gray.opacity(0.2))
+              .fill(theme.surface)
               .frame(width: avatarSize, height: avatarSize)
           }
         }
       } else {
         let avatarSize: CGFloat = 80
         Circle()
-          .fill(Color.gray.opacity(0.2))
+          .fill(theme.surface)
           .frame(width: avatarSize, height: avatarSize)
       }
     }
@@ -83,6 +85,8 @@ struct SpeakerView: View {
     Text(store.speaker.name)
       .font(.title)
       .fontWeight(.bold)
+      .lineLimit(nil)
+      .fixedSize(horizontal: false, vertical: true)
   }
 
   @ViewBuilder
@@ -98,7 +102,7 @@ struct SpeakerView: View {
 
   @ViewBuilder
   private var speakerIntro: some View {
-    Text(store.speaker.intro)
+    Text(store.speaker.intro.decodedSessionDataLineBreaks)
       .font(.body)
       .multilineTextAlignment(.leading)
   }
@@ -175,13 +179,13 @@ struct SpeakerView: View {
         initialState: .init(
           speaker: .init(
             id: 1,
-            name: "John Doe",
-            title: "Software Engineer",
+            name: "金玟庚 / Minkyung Kim",
+            title: "Learning Lead at Apple Developer Academy @ POSTECH",
             intro:
               "John is a software engineer with a passion for building scalable and efficient systems.",
             photo: URL(
               string:
-                "https://raw.githubusercontent.com/iplayground/SessionData/2025/v1/images/speakers/speaker_鄭宇哲.jpg"
+                "https://raw.githubusercontent.com/iplayground/SessionData/2026/v1/images/speakers/speaker_鄭宇哲.jpg"
             ),
             url: URL(string: "https://www.google.com")!,
             fb: URL(string: "https://www.facebook.com")!,

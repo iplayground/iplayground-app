@@ -1,4 +1,4 @@
-// swift-tools-version: 6.0
+// swift-tools-version: 6.2
 
 import Foundation
 import PackageDescription
@@ -10,20 +10,20 @@ let appName = "App"
 let sessionData = SourceControlDependency(
   package: .package(
     url: "https://github.com/iplayground/SessionData",
-    exact: "2025.1.4"
+    exact: "2026.1.0"
   ),
   productName: "SessionData"
 )
 let tca = SourceControlDependency(
   package: .package(
     url: "https://github.com/pointfreeco/swift-composable-architecture",
-    exact: "1.22.0"
+    exact: "1.25.5"
   ),
   productName: "ComposableArchitecture"
 )
 let swiftDependencies = Package.Dependency.package(
   url: "https://github.com/pointfreeco/swift-dependencies",
-  from: "1.9.2"
+  from: "1.12.0"
 )
 let identifiedCollections = SourceControlDependency(
   package: .package(
@@ -40,14 +40,6 @@ let dependenciesMacros = SourceControlDependency(
   package: swiftDependencies,
   productName: "DependenciesMacros"
 )
-let flitto = SourceControlDependency(
-  package: .package(
-    url: "https://github.com/flitto/rtt_sdk",
-    revision: "f1da670032cb52081285752b7a8c479118038393"
-  ),
-  productName: "rtt-sdk"
-)
-
 // MARK: - Modules. Ordered by dependency hierarchy.
 
 let models = SingleTargetLibrary(
@@ -79,6 +71,9 @@ let views = SingleTargetLibrary(
     tca.targetDependency,
     models.targetDependency,
     features.targetDependency,
+  ],
+  resources: [
+    .process("Resources")
   ]
 )
 let dependencyClientsLive = SingleTargetLibrary(
@@ -87,7 +82,6 @@ let dependencyClientsLive = SingleTargetLibrary(
     dependencies.targetDependency,
     dependenciesMacros.targetDependency,
     dependencyClients.targetDependency,
-    flitto.targetDependency,
   ]
 )
 let publicApp = SingleTargetLibrary(
@@ -121,7 +115,6 @@ let package = Package(
     identifiedCollections.package,
     swiftDependencies,
     sessionData.package,
-    flitto.package,
   ],
   targets: [
     models.target,
@@ -165,7 +158,7 @@ struct SourceControlDependency {
       fatalError("Unsupported dependency kind: \(package.kind)")
     }
 
-    return .product(name: productName, package: packageName, moduleAliases: nil, condition: nil)
+    return .product(name: productName, package: packageName)
   }
 }
 
@@ -173,13 +166,14 @@ struct SourceControlDependency {
 struct SingleTargetLibrary {
   var name: String
   var dependencies: [Target.Dependency] = []
+  var resources: [Resource]? = nil
 
   var product: Product {
     .library(name: name, targets: [name])
   }
 
   var target: Target {
-    .target(name: name, dependencies: dependencies)
+    .target(name: name, dependencies: dependencies, resources: resources)
   }
 
   var swift5Target: Target {
@@ -191,6 +185,12 @@ struct SingleTargetLibrary {
   }
 
   var testTarget: Target {
-    .testTarget(name: name + "Tests", dependencies: [targetDependency])
+    .testTarget(
+      name: name + "Tests",
+      dependencies: [targetDependency],
+      linkerSettings: [
+        .linkedFramework("AppIntents")
+      ]
+    )
   }
 }

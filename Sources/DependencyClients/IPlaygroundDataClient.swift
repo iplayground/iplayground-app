@@ -2,12 +2,15 @@ import Dependencies
 import DependenciesMacros
 import Foundation
 import IdentifiedCollections
+import Models
 import SessionData
 
 @DependencyClient
 public struct IPlaygroundDataClient: Sendable {
   public var fetchSchedules:
     @Sendable (_ day: Int?, _ strategy: FetchStrategy) async throws -> [Session]
+  public var fetchAgenda:
+    @Sendable (_ day: Int?, _ strategy: FetchStrategy) async throws -> [ScheduledSession]
   public var fetchSpeakers:
     @Sendable (_ strategy: FetchStrategy) async throws -> IdentifiedArrayOf<Speaker>
   public var fetchSponsors: @Sendable (_ strategy: FetchStrategy) async throws -> SponsorsData
@@ -19,26 +22,78 @@ extension IPlaygroundDataClient: TestDependencyKey {
   public static let testValue = Self()
   public static let previewValue: IPlaygroundDataClient = {
     let dataLanguage = DataLanguage(localeIdentifier: Locale.preferredLanguages.first ?? "en")
-    let client = SessionDataClient.live
-    return IPlaygroundDataClient(
-      fetchSchedules: { day, _ in
-        try await client.fetchSchedules(day, dataLanguage, .localOnly)
+    return .sessionDataValue(dataLanguage: dataLanguage, forcedStrategy: .localOnly)
+  }()
+}
+
+extension IPlaygroundDataClient {
+  public static func sessionDataValue(
+    dataLanguage: DataLanguage,
+    client: SessionDataClient = .live,
+    forcedStrategy: FetchStrategy? = nil
+  ) -> IPlaygroundDataClient {
+    IPlaygroundDataClient(
+      fetchSchedules: { day, strategy in
+        let schedule = try await client.fetchSchedules(
+          dataLanguage: dataLanguage,
+          strategy: forcedStrategy ?? strategy
+        )
+        return schedule.sessions(for: day)
       },
-      fetchSpeakers: { _ in
-        let speakers = try await client.fetchSpeakers(dataLanguage, .localOnly)
+      fetchAgenda: { day, strategy in
+        let schedule = try await client.fetchSchedules(
+          dataLanguage: dataLanguage,
+          strategy: forcedStrategy ?? strategy
+        )
+        return schedule.scheduledSessions(for: day)
+      },
+      fetchSpeakers: { strategy in
+        let speakers = try await client.fetchSpeakers(
+          dataLanguage: dataLanguage,
+          strategy: forcedStrategy ?? strategy
+        )
         return IdentifiedArrayOf(uniqueElements: speakers)
       },
-      fetchSponsors: { _ in
-        try await client.fetchSponsors(.localOnly)
+      fetchSponsors: { strategy in
+        try await client.fetchSponsors(strategy: forcedStrategy ?? strategy)
       },
-      fetchStaffs: { _ in
-        try await client.fetchStaffs(.localOnly)
+      fetchStaffs: { strategy in
+        try await client.fetchStaffs(strategy: forcedStrategy ?? strategy)
       },
-      fetchLinks: { _ in
-        try await client.fetchLinks(.localOnly)
+      fetchLinks: { strategy in
+        try await client.fetchLinks(strategy: forcedStrategy ?? strategy)
       }
     )
-  }()
+  }
+}
+
+extension Schedule {
+  fileprivate func sessions(for day: Int?) -> [Session] {
+    switch day {
+    case 1:
+      return day1
+    case 2:
+      return day2
+    case nil:
+      return day1 + day2
+    default:
+      return []
+    }
+  }
+
+  fileprivate func scheduledSessions(for day: Int?) -> [ScheduledSession] {
+    switch day {
+    case 1:
+      return ScheduledSession.merged(sessions: day1, workshops: workshopDay1)
+    case 2:
+      return ScheduledSession.merged(sessions: day2, workshops: workshopDay2)
+    case nil:
+      return ScheduledSession.merged(sessions: day1, workshops: workshopDay1)
+        + ScheduledSession.merged(sessions: day2, workshops: workshopDay2)
+    default:
+      return []
+    }
+  }
 }
 
 extension DependencyValues {

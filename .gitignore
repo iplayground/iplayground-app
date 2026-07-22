@@ -9,3 +9,4 @@ DerivedData/
 
 # Configuration files
 *.xcconfig
+.env

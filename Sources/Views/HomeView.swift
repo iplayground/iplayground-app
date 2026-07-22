@@ -1,5 +1,6 @@
 import ComposableArchitecture
 import Features
+import Models
 import SwiftUI
 
 struct HomeView: View {
@@ -15,19 +16,19 @@ struct HomeView: View {
       TodayView(
         store: store.scope(state: \.today, action: \.today)
       )
-      .tabItem { Label(String(localized: "議程與活動", bundle: .module), systemImage: "calendar") }
+      .tabItem { Label(String(localized: "議程", bundle: .module), systemImage: "calendar") }
 
-      // Tab 2: Sponsors, Speakers, & Staff
+      // Tab 2: Live captions
+      LiveCaptionView(
+        store: store.scope(state: \.liveCaption, action: \.liveCaption)
+      )
+      .tabItem { Label(String(localized: "字幕", bundle: .module), systemImage: "captions.bubble") }
+
+      // Tab 3: Sponsors, Speakers, & Staff
       CommunityView(
         store: store.scope(state: \.community, action: \.community)
       )
       .tabItem { Label(String(localized: "社群", bundle: .module), systemImage: "person.3") }
-
-      // Tab 3: Flitto (Live Translation)
-      LiveTranslationView(
-        store: store.scope(state: \.liveTranslation, action: \.liveTranslation)
-      )
-      .tabItem { Label(String(localized: "即時翻譯", bundle: .module), systemImage: "globe") }
 
       // Tab 4: My
       MyView(store: store.scope(state: \.my, action: \.my))
@@ -48,8 +49,7 @@ struct HomeView: View {
 #Preview("活動前") {
   let _ = prepareDependencies {
     $0.date.now = {
-      let date = Calendar(identifier: .gregorian).date(
-        from: DateComponents(year: 2025, month: 8, day: 29, hour: 9, minute: 0))!
+      let date = IPlaygroundEvent.date(month: 7, day: 24, hour: 9)
       return date
     }()
   }
@@ -64,8 +64,7 @@ struct HomeView: View {
 #Preview("活動中 - Day 1") {
   let _ = prepareDependencies {
     $0.date.now = {
-      let date = Calendar(identifier: .gregorian).date(
-        from: DateComponents(year: 2025, month: 8, day: 30, hour: 9, minute: 35))!
+      let date = IPlaygroundEvent.date(month: 7, day: 25, hour: 9, minute: 35)
       return date
     }()
   }
@@ -80,8 +79,7 @@ struct HomeView: View {
 #Preview("活動中 - Day 2") {
   let _ = prepareDependencies {
     $0.date.now = {
-      let date = Calendar(identifier: .gregorian).date(
-        from: DateComponents(year: 2025, month: 8, day: 31, hour: 17, minute: 10))!
+      let date = IPlaygroundEvent.date(month: 7, day: 26, hour: 17, minute: 10)
       return date
     }()
   }
@@ -96,8 +94,7 @@ struct HomeView: View {
 #Preview("活動結束後") {
   let _ = prepareDependencies {
     $0.date.now = {
-      let date = Calendar(identifier: .gregorian).date(
-        from: DateComponents(year: 2025, month: 8, day: 31, hour: 18, minute: 0))!
+      let date = IPlaygroundEvent.date(month: 7, day: 26, hour: 18)
       return date
     }()
   }

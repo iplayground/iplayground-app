@@ -4,7 +4,5 @@
 <dict>
 	<key>CFBundleAllowMixedLocalizations</key>
 	<true/>
-	<key>LIVE_TRANSLATION_ROOM_NUMBER</key>
-	<string>$(LIVE_TRANSLATION_ROOM_NUMBER)</string>
 </dict>
 </plist>

@@ -16,8 +16,8 @@ package struct HomeFeature {
     @Shared(.links) package var links: [Link] = []
 
     package var today = TodayFeature.State()
+    package var liveCaption = LiveCaptionFeature.State()
     package var community = CommunityFeature.State()
-    package var liveTranslation = LiveTranslationFeature.State()
     package var my = MyFeature.State()
     package var about = AboutFeature.State()
 
@@ -26,12 +26,16 @@ package struct HomeFeature {
 
   package enum Action: Equatable, BindableAction {
     case today(TodayFeature.Action)
+    case liveCaption(LiveCaptionFeature.Action)
     case community(CommunityFeature.Action)
-    case liveTranslation(LiveTranslationFeature.Action)
     case my(MyFeature.Action)
     case about(AboutFeature.Action)
     case binding(BindingAction<State>)
     case task
+    case setSpeakers(IdentifiedArrayOf<Speaker>)
+    case setSponsorData(SponsorsData)
+    case setStaffs([Staff])
+    case setLinks([Link])
   }
 
   package init() {}
@@ -40,11 +44,11 @@ package struct HomeFeature {
     Scope(state: \.today, action: \.today) {
       TodayFeature()
     }
+    Scope(state: \.liveCaption, action: \.liveCaption) {
+      LiveCaptionFeature()
+    }
     Scope(state: \.community, action: \.community) {
       CommunityFeature()
-    }
-    Scope(state: \.liveTranslation, action: \.liveTranslation) {
-      LiveTranslationFeature()
     }
     Scope(state: \.my, action: \.my) {
       MyFeature()
@@ -61,10 +65,10 @@ package struct HomeFeature {
     case .today:
       return .none
 
-    case .community:
+    case .liveCaption:
       return .none
 
-    case .liveTranslation:
+    case .community:
       return .none
 
     case .my:
@@ -76,6 +80,22 @@ package struct HomeFeature {
     case .binding:
       return .none
 
+    case let .setSpeakers(speakers):
+      state.$speakers.withLock { $0 = speakers }
+      return .none
+
+    case let .setSponsorData(sponsorData):
+      state.$sponsorData.withLock { $0 = sponsorData }
+      return .none
+
+    case let .setStaffs(staffs):
+      state.$staffs.withLock { $0 = staffs }
+      return .none
+
+    case let .setLinks(links):
+      state.$links.withLock { $0 = links }
+      return .none
+
     case .task:
       return .run { send in
         await withThrowingTaskGroup(of: Void.self) { group in
@@ -84,11 +104,11 @@ package struct HomeFeature {
             let cachedSpeakers = try await client.fetchSpeakers(.cacheFirst)
             async let remoteSpeakers = try await client.fetchSpeakers(.remote)
 
-            await send(.binding(.set(\.speakers, cachedSpeakers)))
+            await send(.setSpeakers(cachedSpeakers))
 
             let speakers = try await remoteSpeakers
             if speakers != cachedSpeakers {
-              await send(.binding(.set(\.speakers, speakers)))
+              await send(.setSpeakers(speakers))
             }
           }
           group.addTask {
@@ -96,11 +116,11 @@ package struct HomeFeature {
             let cachedSponsorData = try await client.fetchSponsors(.cacheFirst)
             async let remoteSponsorData = try await client.fetchSponsors(.remote)
 
-            await send(.binding(.set(\.sponsorData, cachedSponsorData)))
+            await send(.setSponsorData(cachedSponsorData))
 
             let sponsorData = try await remoteSponsorData
             if sponsorData != cachedSponsorData {
-              await send(.binding(.set(\.sponsorData, sponsorData)))
+              await send(.setSponsorData(sponsorData))
             }
           }
           group.addTask {
@@ -108,11 +128,11 @@ package struct HomeFeature {
             let cachedStaffs = try await client.fetchStaffs(.cacheFirst)
             async let remoteStaffs = try await client.fetchStaffs(.remote)
 
-            await send(.binding(.set(\.staffs, cachedStaffs)))
+            await send(.setStaffs(cachedStaffs))
 
             let staffs = try await remoteStaffs
             if staffs != cachedStaffs {
-              await send(.binding(.set(\.staffs, staffs)))
+              await send(.setStaffs(staffs))
             }
           }
           group.addTask {
@@ -120,11 +140,11 @@ package struct HomeFeature {
             let cachedLinks = try await client.fetchLinks(.cacheFirst)
             async let remoteLinks = try await client.fetchLinks(.remote)
 
-            await send(.binding(.set(\.links, cachedLinks)))
+            await send(.setLinks(cachedLinks))
 
             let links = try await remoteLinks
             if links != cachedLinks {
-              await send(.binding(.set(\.links, links)))
+              await send(.setLinks(links))
             }
           }
         }

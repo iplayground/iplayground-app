@@ -73,6 +73,8 @@ package struct TodayFeature {
     case binding(BindingAction<State>)
     case path(StackActionOf<Path>)
     case view(ViewAction)
+    case loadedDay1Sessions([SessionWrapper])
+    case loadedDay2Sessions([SessionWrapper])
     case navigateToSpeaker(Speaker, hackMDURL: URL?)
 
     @CasePathable
@@ -93,10 +95,12 @@ package struct TodayFeature {
 
   package func core(state: inout State, action: Action) -> Effect<Action> {
     switch action {
-    case .binding(\.day1Sessions):
+    case let .loadedDay1Sessions(sessions):
+      state.$day1Sessions.withLock { $0 = sessions }
+
       if state.initialLoaded == false {
         // 如果現在時間超過第一天的議程的內容，則把selectedDay切成第二天
-        if let lastSessionEnd = state.day1Sessions.last?.dateInterval?.end {
+        if let lastSessionEnd = sessions.last?.dateInterval?.end {
           @Dependency(\.date.now) var now
           if now > lastSessionEnd {
             state.selectedDay = .day2
@@ -106,6 +110,10 @@ package struct TodayFeature {
         state.initialLoaded = true
       }
 
+      return .none
+
+    case let .loadedDay2Sessions(sessions):
+      state.$day2Sessions.withLock { $0 = sessions }
       return .none
 
     case .binding:
@@ -121,38 +129,38 @@ package struct TodayFeature {
           await withThrowingTaskGroup(of: Void.self) { group in
             group.addTask {
               @Dependency(\.iPlaygroundDataClient) var client
-              let cachedSessions = try await client.fetchSchedules(1, .cacheFirst)
-              async let sessions = try await client.fetchSchedules(1, .remote)
-              let day1Date = createDate(year: 2025, month: 8, day: 30)
+              let cachedSessions = try await client.fetchAgenda(1, .cacheFirst)
+              async let sessions = try await client.fetchAgenda(1, .remote)
+              let day1Date = IPlaygroundEvent.day1Date
 
               let cached = cachedSessions.map {
-                SessionWrapper(date: day1Date, session: $0)
+                SessionWrapper(date: day1Date, scheduledSession: $0)
               }
-              await send(.binding(.set(\.day1Sessions, cached)))
+              await send(.loadedDay1Sessions(cached))
 
               let remoteSessions = try await sessions.map {
-                SessionWrapper(date: day1Date, session: $0)
+                SessionWrapper(date: day1Date, scheduledSession: $0)
               }
               if remoteSessions != cached {
-                await send(.binding(.set(\.day1Sessions, remoteSessions)))
+                await send(.loadedDay1Sessions(remoteSessions))
               }
             }
             group.addTask {
               @Dependency(\.iPlaygroundDataClient) var client
-              let cachedSessions = try await client.fetchSchedules(2, .cacheFirst)
-              async let sessions = try await client.fetchSchedules(2, .remote)
-              let day2Date = createDate(year: 2025, month: 8, day: 31)
+              let cachedSessions = try await client.fetchAgenda(2, .cacheFirst)
+              async let sessions = try await client.fetchAgenda(2, .remote)
+              let day2Date = IPlaygroundEvent.day2Date
 
               let cached = cachedSessions.map {
-                SessionWrapper(date: day2Date, session: $0)
+                SessionWrapper(date: day2Date, scheduledSession: $0)
               }
-              await send(.binding(.set(\.day2Sessions, cached)))
+              await send(.loadedDay2Sessions(cached))
 
               let remoteSessions = try await sessions.map {
-                SessionWrapper(date: day2Date, session: $0)
+                SessionWrapper(date: day2Date, scheduledSession: $0)
               }
               if remoteSessions != cached {
-                await send(.binding(.set(\.day2Sessions, remoteSessions)))
+                await send(.loadedDay2Sessions(remoteSessions))
               }
             }
           }
@@ -190,13 +198,5 @@ package struct TodayFeature {
         .speaker(.init(speaker: speaker, hackMDURL: hackMDURL)))
       return .none
     }
-  }
-
-  private func createDate(year: Int, month: Int, day: Int) -> Date {
-    var calendar = Calendar(identifier: .gregorian)
-    calendar.timeZone = TimeZone(secondsFromGMT: 8 * 3600)!
-
-    let components = DateComponents(year: year, month: month, day: day)
-    return calendar.date(from: components)!
   }
 }

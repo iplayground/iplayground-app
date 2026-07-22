@@ -4,7 +4,7 @@ import MapKit
 import Models
 import SwiftUI
 
-// Coordinate and address are hard-coded for 2025 event
+// Coordinate and address are hard-coded for the current event.
 
 let coordinate = CLLocationCoordinate2D(
   latitude: 25.030146,
@@ -24,6 +24,8 @@ let initialMapPosition: MapCameraPosition = .region(
 package struct AboutView: View {
   @Bindable package var store: StoreOf<AboutFeature>
   @State private var lookAroundScene: MKLookAroundScene?
+  @Environment(\.iPlaygroundTheme) private var theme
+  @Environment(IPlaygroundThemeStore.self) private var themeStore
 
   package init(store: StoreOf<AboutFeature>) {
     self.store = store
@@ -56,19 +58,38 @@ package struct AboutView: View {
       HStack {
         Spacer()
         VStack(alignment: .center) {
-          Image(.iPlayground)
+          appIcon
             .resizable()
             .frame(width: 80, height: 80)
             .clipShape(RoundedRectangle(cornerRadius: 16))
-          Text(verbatim: "iPlayground 2025")
-            .font(.title)
-            .monospaced()
+          aboutLogo
         }
         Spacer()
       }
       .textCase(.none)
       .padding(.top)
       .padding(.bottom, -13)
+    }
+  }
+
+  private var appIcon: Image {
+    switch theme {
+    case .y2026:
+      return Image("iPlayground-2026", bundle: .module)
+    case .y2025:
+      return Image("iPlayground-2025", bundle: .module)
+    }
+  }
+
+  @ViewBuilder
+  private var aboutLogo: some View {
+    switch theme {
+    case .y2026:
+      IPlaygroundWordmark()
+    case .y2025:
+      Text(verbatim: "iPlayground \(IPlaygroundEvent.yearString)")
+        .font(.title)
+        .monospaced()
     }
   }
 
@@ -178,6 +199,20 @@ package struct AboutView: View {
   @ViewBuilder
   private var appInfoSection: some View {
     Section(String(localized: "App 資訊", bundle: .module)) {
+      HStack {
+        Label(String(localized: "主題", bundle: .module), systemImage: "paintpalette")
+        Spacer()
+        Picker("", selection: selectedTheme) {
+          ForEach(IPlaygroundTheme.allCases) { theme in
+            Text(verbatim: theme.displayName)
+              .tag(theme)
+          }
+        }
+        .labelsHidden()
+        .pickerStyle(.segmented)
+        .frame(width: 150)
+      }
+
       ForEach(appInfoLinks) { link in
         urlMenuButton(link: link)
       }
@@ -220,6 +255,7 @@ package struct AboutView: View {
           }
           Spacer()
           Image(systemName: "arrow.up.right.square")
+            .foregroundStyle(theme.tint)
         }
       },
       primaryAction: {
@@ -257,6 +293,14 @@ package struct AboutView: View {
       link.type == .appInfo
     }
   }
+
+  private var selectedTheme: Binding<IPlaygroundTheme> {
+    Binding {
+      themeStore.selectedTheme
+    } set: { newValue in
+      themeStore.selectTheme(newValue)
+    }
+  }
 }
 
 // Link title localized by ID
@@ -285,7 +329,7 @@ extension Models.Link {
     case "facebook":
       return "Facebook"
     case "app-source":
-      return "iplayground-app-2025"
+      return "iplayground-app"
     case "session-data-source":
       return "SessionData"
     case "app-store":
@@ -312,5 +356,6 @@ extension Models.Link {
         reducer: { AboutFeature() }
       )
     )
+    .environment(IPlaygroundThemeStore())
   }
 }

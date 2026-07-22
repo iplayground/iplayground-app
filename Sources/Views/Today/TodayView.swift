@@ -8,6 +8,7 @@ import SwiftUI
 struct TodayView: View {
   @Bindable var store: StoreOf<TodayFeature>
   @State private var nowSectionID: Int = 0
+  @Environment(\.iPlaygroundTheme) private var theme
 
   var body: some View {
     NavigationStack(
@@ -56,7 +57,7 @@ struct TodayView: View {
             )
             .buttonStyle(.plain)
             .padding()
-            .background(Color(.widgetBackground))
+            .background(theme.widgetBackground)
             .clipShape(RoundedRectangle(cornerRadius: 16))
             .padding(.horizontal)
             .padding(.bottom)
@@ -91,8 +92,8 @@ struct TodayView: View {
         HStack {
           Text(
             """
-            \(Text(verbatim: "iPlayground").foregroundStyle(Color(.iPlaygroundBlue))) \(Text(verbatim: "2025").foregroundStyle(Color(.iPlaygroundYellow)))
-            \(Text(startDate, style: .relative).foregroundStyle(Color(.iPlaygroundPink)))
+            \(Text(verbatim: "iPlayground").foregroundStyle(theme.primary)) \(Text(verbatim: IPlaygroundEvent.yearString).foregroundStyle(theme.secondary))
+            \(Text(startDate, style: .relative).foregroundStyle(theme.tertiary))
             """
           )
           .font(.headline)
@@ -103,8 +104,8 @@ struct TodayView: View {
         HStack {
           Text(
             """
-            \(Text(verbatim: "iPlayground").foregroundStyle(Color(.iPlaygroundBlue))) \(Text(verbatim: "2025").foregroundStyle(Color(.iPlaygroundYellow)))
-            \(Text("活動已結束，感謝您的參與！", bundle: .module).foregroundStyle(Color(.iPlaygroundPink)))
+            \(Text(verbatim: "iPlayground").foregroundStyle(theme.primary)) \(Text(verbatim: IPlaygroundEvent.yearString).foregroundStyle(theme.secondary))
+            \(Text("活動已結束，感謝您的參與！", bundle: .module).foregroundStyle(theme.tertiary))
             """
           )
           .font(.headline)
@@ -125,7 +126,7 @@ struct TodayView: View {
                 bundle: .module
               )
               .font(.headline)
-              .foregroundStyle(Color(.iPlaygroundBlue))
+              .foregroundStyle(theme.primary)
             }
 
             if let nextSession = store.nextSession {
@@ -134,7 +135,7 @@ struct TodayView: View {
                 bundle: .module
               )
               .font(.subheadline)
-              .foregroundStyle(Color(.iPlaygroundPink))
+              .foregroundStyle(theme.tertiary)
             }
 
             if let nextNextSession = store.nextNextSession {
@@ -143,7 +144,7 @@ struct TodayView: View {
                 bundle: .module
               )
               .font(.subheadline)
-              .foregroundStyle(Color(.iPlaygroundYellow))
+              .foregroundStyle(theme.secondary)
             }
           }
           Spacer()
@@ -182,16 +183,16 @@ struct TodayView: View {
               sessionCell(session)
               Spacer()
               Image(systemName: "chevron.right")
-                .foregroundStyle(Color(.accent))
+                .foregroundStyle(theme.tint)
             }
           }
         )
         .listRowBackground(
-          Color(.widgetBackground).opacity(session.id == currentSessionID ? 1.0 : 0))
+          theme.widgetBackground.opacity(session.id == currentSessionID ? 1.0 : 0))
       } else {
         sessionCell(session)
           .listRowBackground(
-            Color(.widgetBackground).opacity(session.id == currentSessionID ? 1.0 : 0))
+            theme.widgetBackground.opacity(session.id == currentSessionID ? 1.0 : 0))
       }
     }
   }
@@ -199,9 +200,23 @@ struct TodayView: View {
   @ViewBuilder
   private func sessionCell(_ session: SessionWrapper) -> some View {
     VStack(alignment: .leading, spacing: 4) {
-      Text(session.timeRange)
-        .font(.footnote)
-        .foregroundColor(.secondary)
+      HStack(spacing: 4) {
+        if session.isWorkshop {
+          Image(systemName: "hammer.fill")
+            .foregroundStyle(theme.tint)
+            .accessibilityLabel(Text("工作坊", bundle: .module))
+        }
+
+        Text(session.timeRange)
+          .foregroundStyle(.secondary)
+
+        if session.isRecording == false {
+          Image(systemName: "video.slash.fill")
+            .foregroundStyle(.secondary)
+            .accessibilityLabel(Text("本場次無錄影", bundle: .module))
+        }
+      }
+      .font(.footnote)
 
       Text(session.title)
         .font(.headline)
@@ -239,11 +254,9 @@ extension TodayFeature.State.Day {
   var startOfDay: Date {
     switch self {
     case .day1:
-      return Calendar(identifier: .gregorian).date(
-        from: DateComponents(year: 2025, month: 8, day: 30))!
+      return IPlaygroundEvent.day1Date
     case .day2:
-      return Calendar(identifier: .gregorian).date(
-        from: DateComponents(year: 2025, month: 8, day: 31))!
+      return IPlaygroundEvent.day2Date
     }
   }
 }
@@ -251,8 +264,7 @@ extension TodayFeature.State.Day {
 #Preview("活動前") {
   let _ = prepareDependencies {
     $0.date.now = {
-      let date = Calendar(identifier: .gregorian).date(
-        from: DateComponents(year: 2025, month: 8, day: 29, hour: 9, minute: 0))!
+      let date = IPlaygroundEvent.date(month: 7, day: 24, hour: 9)
       return date
     }()
   }
@@ -267,8 +279,7 @@ extension TodayFeature.State.Day {
 #Preview("活動中 - Day 1") {
   let _ = prepareDependencies {
     $0.date.now = {
-      let date = Calendar(identifier: .gregorian).date(
-        from: DateComponents(year: 2025, month: 8, day: 30, hour: 9, minute: 35))!
+      let date = IPlaygroundEvent.date(month: 7, day: 25, hour: 9, minute: 35)
       return date
     }()
   }
@@ -283,8 +294,7 @@ extension TodayFeature.State.Day {
 #Preview("活動中 - Day 1 與 2 之間") {
   let _ = prepareDependencies {
     $0.date.now = {
-      let date = Calendar(identifier: .gregorian).date(
-        from: DateComponents(year: 2025, month: 8, day: 30, hour: 20, minute: 35))!
+      let date = IPlaygroundEvent.date(month: 7, day: 25, hour: 20, minute: 35)
       return date
     }()
   }
@@ -299,8 +309,7 @@ extension TodayFeature.State.Day {
 #Preview("活動中 - Day 2") {
   let _ = prepareDependencies {
     $0.date.now = {
-      let date = Calendar(identifier: .gregorian).date(
-        from: DateComponents(year: 2025, month: 8, day: 31, hour: 17, minute: 10))!
+      let date = IPlaygroundEvent.date(month: 7, day: 26, hour: 17, minute: 10)
       return date
     }()
   }
@@ -315,8 +324,7 @@ extension TodayFeature.State.Day {
 #Preview("活動結束後") {
   let _ = prepareDependencies {
     $0.date.now = {
-      let date = Calendar(identifier: .gregorian).date(
-        from: DateComponents(year: 2025, month: 8, day: 31, hour: 18, minute: 0))!
+      let date = IPlaygroundEvent.date(month: 7, day: 26, hour: 18)
       return date
     }()
   }
