@@ -6,6 +6,7 @@ import SwiftUI
 enum AppNavigationTitle: String {
   case activity = "活動"
   case scheduleAndWorkshops = "議程與工作坊"
+  case speaker = "講者"
 
   var localizedResource: LocalizedStringResource {
     switch self {
@@ -13,6 +14,8 @@ enum AppNavigationTitle: String {
       return LocalizedStringResource("活動", bundle: .module)
     case .scheduleAndWorkshops:
       return LocalizedStringResource("議程與工作坊", bundle: .module)
+    case .speaker:
+      return LocalizedStringResource("speaker.navigationTitle", bundle: .module)
     }
   }
 }

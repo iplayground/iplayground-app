@@ -14,20 +14,49 @@ final class AppNavigationPresentationTests: XCTestCase {
     XCTAssertEqual(AppNavigationTitle.scheduleAndWorkshops.rawValue, "議程與工作坊")
   }
 
+  func testSpeakerNavigationTitle() {
+    XCTAssertEqual(AppNavigationTitle.speaker.rawValue, "講者")
+  }
+
   func testNavigationCopyIsLocalizedForEverySupportedLocale() throws {
     let catalog = try loadCatalog()
     let expectedLocalizations = [
       "活動": [
-        "en": "Event",
-        "ja": "イベント",
-        "ko": "이벤트",
+        "en": "Activities",
+        "ja": "アクティビティ",
+        "ko": "활동",
         "zh-Hans": "活动",
       ],
       "議程與工作坊": [
-        "en": "Schedule & Workshops",
-        "ja": "スケジュールとワークショップ",
-        "ko": "일정 및 워크숍",
+        "en": "Sessions & Workshops",
+        "ja": "セッションとワークショップ",
+        "ko": "세션 및 워크숍",
         "zh-Hans": "议程与工作坊",
+      ],
+      "贊助商": [
+        "en": "Sponsors",
+        "ja": "スポンサー",
+        "ko": "스폰서",
+        "zh-Hans": "赞助商",
+      ],
+      "講者": [
+        "en": "Speakers",
+        "ja": "スピーカー",
+        "ko": "발표자",
+        "zh-Hans": "讲者",
+      ],
+      "工作人員": [
+        "en": "Staff",
+        "ja": "スタッフ",
+        "ko": "스태프",
+        "zh-Hans": "工作人员",
+      ],
+      "speaker.navigationTitle": [
+        "en": "Speaker",
+        "ja": "スピーカー",
+        "ko": "발표자",
+        "zh-Hans": "讲者",
+        "zh-Hant": "講者",
       ],
     ]
 

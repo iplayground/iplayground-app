@@ -1081,25 +1081,60 @@
         }
       }
     },
-    "活動" : {
-      "comment" : "Tab bar item and page title for event-related links and resources.",
+    "speaker.navigationTitle" : {
+      "comment" : "Navigation title for an individual speaker detail page.",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Event"
+            "value" : "Speaker"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "イベント"
+            "value" : "スピーカー"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "이벤트"
+            "value" : "발표자"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "讲者"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "講者"
+          }
+        }
+      }
+    },
+    "活動" : {
+      "comment" : "Tab bar item and page title for activities and resources within the conference.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activities"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アクティビティ"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "활동"
           }
         },
         "zh-Hans" : {
@@ -1563,7 +1598,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Speaker"
+            "value" : "Speakers"
           }
         },
         "ja" : {
@@ -1616,24 +1651,24 @@
       }
     },
     "議程與工作坊" : {
-      "comment" : "Navigation title for the event schedule, including workshops.",
+      "comment" : "Navigation title for conference sessions and workshops.",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Schedule & Workshops"
+            "value" : "Sessions & Workshops"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "スケジュールとワークショップ"
+            "value" : "セッションとワークショップ"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "일정 및 워크숍"
+            "value" : "세션 및 워크숍"
           }
         },
         "zh-Hans" : {

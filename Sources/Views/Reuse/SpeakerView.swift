@@ -31,7 +31,7 @@ struct SpeakerView: View {
       socialLinks
     }
     .contentMargins(.top, .zero)
-    .navigationTitle("講者")
+    .navigationTitle(Text(AppNavigationTitle.speaker.localizedResource))
     .navigationBarTitleDisplayMode(.inline)
     .toolbar {
       if let hackMDURL = store.hackMDURL {
