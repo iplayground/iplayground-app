@@ -25,6 +25,13 @@
         "identifier" : "ModelsTests",
         "name" : "ModelsTests"
       }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "ViewsTests",
+        "name" : "ViewsTests"
+      }
     }
   ],
   "version" : 1

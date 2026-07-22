@@ -38,12 +38,8 @@ struct CommunityView: View {
 
       switch store.selectedTab {
       case .sponsor:
-        if theme == .y2025 {
-          sponsorsView
-            .environment(\.colorScheme, .light)
-        } else {
-          sponsorsView
-        }
+        sponsorsView
+          .environment(\.colorScheme, SponsorViewConfiguration.colorScheme)
       case .speaker:
         speakersView
       case .staff:
@@ -74,52 +70,64 @@ struct CommunityView: View {
   @ViewBuilder
   private var sponsorsView: some View {
     List {
-      Section(String(localized: "鑽石級贊助商", bundle: .module)) {
-        ForEach(
-          store.sponsorData.sponsors.first(where: { $0.title == "鑽石級" })?.items ?? [], id: \.name
-        ) { sponsor in
-          sponsorCell(name: sponsor.name, logoURL: sponsor.picture, url: sponsor.link)
+      let sections = SponsorSectionsData(store.sponsorData)
+
+      if sections.isVisible(.diamond) {
+        Section {
+          ForEach(sections.diamond, id: \.name) { sponsor in
+            sponsorCell(name: sponsor.name, logoURL: sponsor.picture, url: sponsor.link)
+          }
+        } header: {
+          Text(sections.title(for: .diamond).localizedResource)
         }
       }
 
-      Section(String(localized: "白銀級贊助商", bundle: .module)) {
-        ForEach(
-          store.sponsorData.sponsors.first(where: { $0.title == "白銀級" })?.items ?? [], id: \.name
-        ) { sponsor in
-          sponsorCell(name: sponsor.name, logoURL: sponsor.picture, url: sponsor.link)
+      if sections.isVisible(.silver) {
+        Section {
+          ForEach(sections.silver, id: \.name) { sponsor in
+            sponsorCell(name: sponsor.name, logoURL: sponsor.picture, url: sponsor.link)
+          }
+        } header: {
+          Text(sections.title(for: .silver).localizedResource)
         }
       }
 
-      Section(String(localized: "青銅級贊助商", bundle: .module)) {
-        ForEach(
-          store.sponsorData.sponsors.first(where: { $0.title == "青銅級" })?.items ?? [], id: \.name
-        ) { sponsor in
-          sponsorCell(name: sponsor.name, logoURL: sponsor.picture, url: sponsor.link)
+      if sections.isVisible(.bronze) {
+        Section {
+          ForEach(sections.bronze, id: \.name) { sponsor in
+            sponsorCell(name: sponsor.name, logoURL: sponsor.picture, url: sponsor.link)
+          }
+        } header: {
+          Text(sections.title(for: .bronze).localizedResource)
         }
       }
 
-      Section(String(localized: "特別贊助", bundle: .module)) {
-        ForEach(
-          store.sponsorData.sponsors.first(where: { $0.title == "特別贊助" })?.items ?? [], id: \.name
-        ) { sponsor in
-          sponsorCell(name: sponsor.name, logoURL: sponsor.picture, url: sponsor.link)
+      if sections.isVisible(.special) {
+        Section(String(localized: "特別贊助", bundle: .module)) {
+          ForEach(sections.special, id: \.name) { sponsor in
+            sponsorCell(name: sponsor.name, logoURL: sponsor.picture, url: sponsor.link)
+          }
         }
       }
 
-      Section(String(localized: "個人贊助", bundle: .module)) {
-        ForEach(store.sponsorData.personal, id: \.name) { sponsor in
-          personCell(
-            name: sponsor.name,
-            title: nil,
-            photoURL: sponsor.icon,
-            navigationIndicator: sponsor.link.map { .link($0) } ?? .empty
-          )
+      if sections.isVisible(.personal) {
+        Section(String(localized: "個人贊助", bundle: .module)) {
+          ForEach(sections.personal, id: \.name) { sponsor in
+            personCell(
+              name: sponsor.name,
+              title: nil,
+              photoURL: sponsor.icon,
+              navigationIndicator: sponsor.link.map { .link($0) } ?? .empty
+            )
+          }
         }
       }
 
-      Section(String(localized: "合作夥伴", bundle: .module)) {
-        ForEach(store.sponsorData.partner, id: \.name) { partner in
-          sponsorCell(name: partner.name, logoURL: partner.icon, url: partner.link)
+      if sections.isVisible(.partner) {
+        Section(String(localized: "合作夥伴", bundle: .module)) {
+          ForEach(sections.partner, id: \.name) { partner in
+            sponsorCell(name: partner.name, logoURL: partner.icon, url: partner.link)
+          }
         }
       }
     }
@@ -268,6 +276,112 @@ struct CommunityView: View {
     }
     .listStyle(.plain)
     .contentMargins(.bottom, -4, for: .scrollIndicators)
+  }
+}
+
+enum SponsorViewConfiguration {
+  static let colorScheme: ColorScheme = .dark
+}
+
+struct SponsorSectionsData {
+  enum Tier: CaseIterable, Equatable {
+    case diamond
+    case silver
+    case bronze
+  }
+
+  enum TierTitle: Equatable {
+    case generic
+    case diamond
+    case silver
+    case bronze
+
+    var localizedResource: LocalizedStringResource {
+      switch self {
+      case .generic:
+        return LocalizedStringResource("贊助商", bundle: .module)
+      case .diamond:
+        return LocalizedStringResource("鑽石級贊助商", bundle: .module)
+      case .silver:
+        return LocalizedStringResource("白銀級贊助商", bundle: .module)
+      case .bronze:
+        return LocalizedStringResource("青銅級贊助商", bundle: .module)
+      }
+    }
+  }
+
+  enum ID: CaseIterable, Equatable {
+    case diamond
+    case silver
+    case bronze
+    case special
+    case personal
+    case partner
+  }
+
+  let diamond: [SponsorItem]
+  let silver: [SponsorItem]
+  let bronze: [SponsorItem]
+  let special: [SponsorItem]
+  let personal: [PersonalSponsor]
+  let partner: [Partner]
+
+  init(_ sponsorData: SponsorsData) {
+    diamond = sponsorData.sponsors.first(where: { $0.title == "鑽石級" })?.items ?? []
+    silver = sponsorData.sponsors.first(where: { $0.title == "白銀級" })?.items ?? []
+    bronze = sponsorData.sponsors.first(where: { $0.title == "青銅級" })?.items ?? []
+    special = sponsorData.sponsors.first(where: { $0.title == "特別贊助" })?.items ?? []
+    personal = sponsorData.personal
+    partner = sponsorData.partner
+  }
+
+  var visibleSectionIDs: [ID] {
+    ID.allCases.filter(isVisible)
+  }
+
+  var visibleTiers: [Tier] {
+    Tier.allCases.filter { tier in
+      switch tier {
+      case .diamond:
+        return diamond.isEmpty == false
+      case .silver:
+        return silver.isEmpty == false
+      case .bronze:
+        return bronze.isEmpty == false
+      }
+    }
+  }
+
+  func title(for tier: Tier) -> TierTitle {
+    guard visibleTiers.count != 1 else {
+      return .generic
+    }
+
+    switch tier {
+    case .diamond:
+      return .diamond
+    case .silver:
+      return .silver
+    case .bronze:
+      return .bronze
+    }
+  }
+
+  func isVisible(_ id: ID) -> Bool {
+    switch id {
+    case .diamond:
+      return diamond.isEmpty == false
+    case .silver:
+      return silver.isEmpty == false
+    case .bronze:
+      return bronze.isEmpty == false
+    case .special:
+      return special.isEmpty == false
+    case .personal:
+      return personal.isEmpty == false
+    case .partner:
+      return partner.isEmpty == false
+    }
   }
 }
 
