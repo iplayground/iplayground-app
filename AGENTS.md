@@ -9,13 +9,12 @@ xcodebuild test \
 ```
 
 ## Git Workflow Rules
-- **When implementing a new feature**: ALWAYS create a new feature branch from `main`
-- **Feature branch naming**: Use descriptive names like `featureName`
-- **REQUIRED**: Feature branches → PR to `main` → GitHub Copilot review → Squash merge
-- **CRITICAL**: Never commit directly to `main` branch - ALWAYS use feature branches
+- **Version branches**: Create one version branch from `main` for each release, named after the version (for example, `2026.0.1`)
+- **Development branch**: Do all development for that release directly on its version branch
+- **CRITICAL**: Never commit directly to `main`
+- **REQUIRED**: Version branch → PR to `main` → Merge commit
 - **After creating PR**: ALWAYS open the PR URL in browser using `open` command
-- **Squash merge messages**: Always provide clean, summarized commit message for squash merges
-- **Prune feature branches after merge**
+- **Merge strategy**: Always use a merge commit; never squash or rebase merge
 
 ## Testing
 - **TDD**: Write tests first before implementation
