@@ -20,7 +20,7 @@ struct MyView: View {
       List {
         personalLinksSection
       }
-      .navigationTitle(String(localized: "我的", bundle: .module))
+      .navigationTitle(Text(AppNavigationTitle.activity.localizedResource))
       .navigationBarTitleDisplayMode(.inline)
       .task {
         send(.task)
