@@ -1,6 +1,5 @@
 import Dependencies
 import DependenciesMacros
-import Foundation
 import IdentifiedCollections
 import Models
 import SessionData
@@ -21,8 +20,7 @@ public struct IPlaygroundDataClient: Sendable {
 extension IPlaygroundDataClient: TestDependencyKey {
   public static let testValue = Self()
   public static let previewValue: IPlaygroundDataClient = {
-    let dataLanguage = DataLanguage(localeIdentifier: Locale.preferredLanguages.first ?? "en")
-    return .sessionDataValue(dataLanguage: dataLanguage, forcedStrategy: .localOnly)
+    .sessionDataValue(dataLanguage: .traditionalChinese, forcedStrategy: .localOnly)
   }()
 }
 
