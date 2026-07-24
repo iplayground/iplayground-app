@@ -5,7 +5,6 @@ public enum IPlaygroundTheme: String, CaseIterable, Identifiable, Sendable {
   case y2026 = "2026"
   case y2025 = "2025"
 
-  public static let appGroupIdentifier = "group.com.ethanhuang13.iPlayground"
   public static let defaultTheme = IPlaygroundTheme.y2026
   public static let storageKey = "iPlayground.theme"
 
@@ -26,12 +25,6 @@ public enum IPlaygroundTheme: String, CaseIterable, Identifiable, Sendable {
   }
 }
 
-extension UserDefaults {
-  public static var iPlaygroundShared: UserDefaults {
-    UserDefaults(suiteName: IPlaygroundTheme.appGroupIdentifier) ?? .standard
-  }
-}
-
 private struct IPlaygroundThemeKey: EnvironmentKey {
   static let defaultValue = IPlaygroundTheme.current
 }
@@ -45,7 +38,7 @@ extension EnvironmentValues {
 
 extension IPlaygroundTheme {
   public static var current: Self {
-    Self(storedValue: UserDefaults.iPlaygroundShared.string(forKey: storageKey))
+    Self(storedValue: UserDefaults.standard.string(forKey: storageKey))
   }
 
   public var tint: Color {

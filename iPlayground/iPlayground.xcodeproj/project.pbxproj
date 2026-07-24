@@ -8,42 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		6C1872882E2F324400AC4610 /* PublicApp in Frameworks */ = {isa = PBXBuildFile; productRef = 6C1872872E2F324400AC4610 /* PublicApp */; };
-		6C7B3E842E605C2F00DD03A4 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C7B3E832E605C2F00DD03A4 /* WidgetKit.framework */; };
-		6C7B3E862E605C2F00DD03A4 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C7B3E852E605C2F00DD03A4 /* SwiftUI.framework */; };
-		6C7B3E912E605C3100DD03A4 /* NowWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 6C7B3E812E605C2F00DD03A4 /* NowWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		6C7B3E982E605CCE00DD03A4 /* DependencyClients in Frameworks */ = {isa = PBXBuildFile; productRef = 6C7B3E972E605CCE00DD03A4 /* DependencyClients */; };
-		6C7B3E9A2E605CCE00DD03A4 /* Models in Frameworks */ = {isa = PBXBuildFile; productRef = 6C7B3E992E605CCE00DD03A4 /* Models */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		6C7B3E8F2E605C3100DD03A4 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 6C18726F2E2F320200AC4610 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 6C7B3E802E605C2F00DD03A4;
-			remoteInfo = NowWidgetExtension;
-		};
-/* End PBXContainerItemProxy section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		6C7B3E922E605C3100DD03A4 /* Embed Foundation Extensions */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 13;
-			files = (
-				6C7B3E912E605C3100DD03A4 /* NowWidgetExtension.appex in Embed Foundation Extensions */,
-			);
-			name = "Embed Foundation Extensions";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		6C1872772E2F320200AC4610 /* iPlayground.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iPlayground.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		6C7B3E812E605C2F00DD03A4 /* NowWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = NowWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
-		6C7B3E832E605C2F00DD03A4 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
-		6C7B3E852E605C2F00DD03A4 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -57,13 +25,6 @@
 			);
 			target = 6C1872762E2F320200AC4610 /* iPlayground */;
 		};
-		6C7B3E962E605C3100DD03A4 /* Exceptions for "NowWidget" folder in "NowWidgetExtension" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Info.plist,
-			);
-			target = 6C7B3E802E605C2F00DD03A4 /* NowWidgetExtension */;
-		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -73,14 +34,6 @@
 				6C393CC32E5A3A75001F169A /* Exceptions for "iPlayground" folder in "iPlayground" target */,
 			);
 			path = iPlayground;
-			sourceTree = "<group>";
-		};
-		6C7B3E872E605C2F00DD03A4 /* NowWidget */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				6C7B3E962E605C3100DD03A4 /* Exceptions for "NowWidget" folder in "NowWidgetExtension" target */,
-			);
-			path = NowWidget;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -94,17 +47,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		6C7B3E7E2E605C2F00DD03A4 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				6C7B3E862E605C2F00DD03A4 /* SwiftUI.framework in Frameworks */,
-				6C7B3E842E605C2F00DD03A4 /* WidgetKit.framework in Frameworks */,
-				6C7B3E9A2E605CCE00DD03A4 /* Models in Frameworks */,
-				6C7B3E982E605CCE00DD03A4 /* DependencyClients in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -112,8 +54,6 @@
 			isa = PBXGroup;
 			children = (
 				6C1872792E2F320200AC4610 /* iPlayground */,
-				6C7B3E872E605C2F00DD03A4 /* NowWidget */,
-				6C7B3E822E605C2F00DD03A4 /* Frameworks */,
 				6C1872782E2F320200AC4610 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -122,18 +62,8 @@
 			isa = PBXGroup;
 			children = (
 				6C1872772E2F320200AC4610 /* iPlayground.app */,
-				6C7B3E812E605C2F00DD03A4 /* NowWidgetExtension.appex */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		6C7B3E822E605C2F00DD03A4 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				6C7B3E832E605C2F00DD03A4 /* WidgetKit.framework */,
-				6C7B3E852E605C2F00DD03A4 /* SwiftUI.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -146,12 +76,10 @@
 				6C1872732E2F320200AC4610 /* Sources */,
 				6C1872742E2F320200AC4610 /* Frameworks */,
 				6C1872752E2F320200AC4610 /* Resources */,
-				6C7B3E922E605C3100DD03A4 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				6C7B3E902E605C3100DD03A4 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				6C1872792E2F320200AC4610 /* iPlayground */,
@@ -164,30 +92,6 @@
 			productReference = 6C1872772E2F320200AC4610 /* iPlayground.app */;
 			productType = "com.apple.product-type.application";
 		};
-		6C7B3E802E605C2F00DD03A4 /* NowWidgetExtension */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 6C7B3E952E605C3100DD03A4 /* Build configuration list for PBXNativeTarget "NowWidgetExtension" */;
-			buildPhases = (
-				6C7B3E7D2E605C2F00DD03A4 /* Sources */,
-				6C7B3E7E2E605C2F00DD03A4 /* Frameworks */,
-				6C7B3E7F2E605C2F00DD03A4 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			fileSystemSynchronizedGroups = (
-				6C7B3E872E605C2F00DD03A4 /* NowWidget */,
-			);
-			name = NowWidgetExtension;
-			packageProductDependencies = (
-				6C7B3E972E605CCE00DD03A4 /* DependencyClients */,
-				6C7B3E992E605CCE00DD03A4 /* Models */,
-			);
-			productName = NowWidgetExtension;
-			productReference = 6C7B3E812E605C2F00DD03A4 /* NowWidgetExtension.appex */;
-			productType = "com.apple.product-type.app-extension";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -199,9 +103,6 @@
 				LastUpgradeCheck = 2650;
 				TargetAttributes = {
 					6C1872762E2F320200AC4610 = {
-						CreatedOnToolsVersion = 16.4;
-					};
-					6C7B3E802E605C2F00DD03A4 = {
 						CreatedOnToolsVersion = 16.4;
 					};
 				};
@@ -227,20 +128,12 @@
 			projectRoot = "";
 			targets = (
 				6C1872762E2F320200AC4610 /* iPlayground */,
-				6C7B3E802E605C2F00DD03A4 /* NowWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		6C1872752E2F320200AC4610 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		6C7B3E7F2E605C2F00DD03A4 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -257,22 +150,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		6C7B3E7D2E605C2F00DD03A4 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		6C7B3E902E605C3100DD03A4 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 6C7B3E802E605C2F00DD03A4 /* NowWidgetExtension */;
-			targetProxy = 6C7B3E8F2E605C3100DD03A4 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		6C1872812E2F320400AC4610 /* Debug */ = {
@@ -410,8 +288,8 @@
 			baseConfigurationReferenceAnchor = 6C1872792E2F320200AC4610 /* iPlayground */;
 			baseConfigurationReferenceRelativePath = Config/Development.xcconfig;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "AppIcon-2025";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = iPlayground/iPlayground.entitlements;
@@ -436,7 +314,6 @@
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ethanhuang13.iPlayground;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				REGISTER_APP_GROUPS = YES;
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator xros xrsimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -453,8 +330,8 @@
 			baseConfigurationReferenceAnchor = 6C1872792E2F320200AC4610 /* iPlayground */;
 			baseConfigurationReferenceRelativePath = Config/Release.xcconfig;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "AppIcon-2025";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = iPlayground/iPlayground.entitlements;
@@ -479,7 +356,6 @@
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ethanhuang13.iPlayground;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				REGISTER_APP_GROUPS = YES;
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator xros xrsimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -488,63 +364,6 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
 				XROS_DEPLOYMENT_TARGET = 2.5;
-			};
-			name = Release;
-		};
-		6C7B3E932E605C3100DD03A4 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = NowWidget/NowWidget.entitlements;
-				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = NowWidget/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = NowWidget;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.ethanhuang13.iPlayground.NowWidget;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				REGISTER_APP_GROUPS = YES;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		6C7B3E942E605C3100DD03A4 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = NowWidget/NowWidget.entitlements;
-				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = NowWidget/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = NowWidget;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.ethanhuang13.iPlayground.NowWidget;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				REGISTER_APP_GROUPS = YES;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
@@ -569,29 +388,12 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		6C7B3E952E605C3100DD03A4 /* Build configuration list for PBXNativeTarget "NowWidgetExtension" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				6C7B3E932E605C3100DD03A4 /* Debug */,
-				6C7B3E942E605C3100DD03A4 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
 		6C1872872E2F324400AC4610 /* PublicApp */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = PublicApp;
-		};
-		6C7B3E972E605CCE00DD03A4 /* DependencyClients */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = DependencyClients;
-		};
-		6C7B3E992E605CCE00DD03A4 /* Models */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Models;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

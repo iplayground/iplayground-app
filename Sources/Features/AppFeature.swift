@@ -11,7 +11,6 @@ package struct AppFeature {
   }
 
   package enum Action: Equatable {
-    case task
     case home(HomeFeature.Action)
   }
 
@@ -26,12 +25,6 @@ package struct AppFeature {
 
   package func core(state: inout State, action: Action) -> Effect<Action> {
     switch action {
-    case .task:
-      return .run { _ in
-        @Dependency(\.widgetClient) var widgetClient
-        widgetClient.reloadTimelines("NowWidget")
-      }
-
     case .home:
       return .none
     }

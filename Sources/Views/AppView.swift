@@ -18,9 +18,6 @@ package struct AppView: View {
       .environment(themeStore)
       .environment(\.iPlaygroundTheme, theme)
       .tint(theme.tint)
-      .task {
-        await store.send(.task).finish()
-      }
   }
 }
 

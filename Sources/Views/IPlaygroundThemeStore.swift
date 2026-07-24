@@ -6,10 +6,6 @@ import Observation
   import UIKit
 #endif
 
-#if canImport(WidgetKit)
-  import WidgetKit
-#endif
-
 @Observable
 @MainActor
 final class IPlaygroundThemeStore {
@@ -17,7 +13,7 @@ final class IPlaygroundThemeStore {
 
   private let userDefaults: UserDefaults
 
-  init(userDefaults: UserDefaults = .iPlaygroundShared) {
+  init(userDefaults: UserDefaults = .standard) {
     self.userDefaults = userDefaults
     self.selectedTheme = IPlaygroundTheme(
       storedValue: userDefaults.string(forKey: IPlaygroundTheme.storageKey))
@@ -30,10 +26,6 @@ final class IPlaygroundThemeStore {
     selectedTheme = theme
     userDefaults.set(theme.rawValue, forKey: IPlaygroundTheme.storageKey)
     syncAppIcon(with: theme)
-
-    #if canImport(WidgetKit)
-      WidgetCenter.shared.reloadTimelines(ofKind: "NowWidget")
-    #endif
   }
 
   private func syncAppIcon(with theme: IPlaygroundTheme) {
