@@ -34,7 +34,7 @@ xcodebuild test \
   -workspace iPlayground/iPlayground.xcworkspace \
   -scheme iPlayground \
   -testPlan iPlayground \
-  -destination 'platform=iOS Simulator,name=iPhone 16,arch=arm64'
+  -destination 'platform=iOS Simulator,name=iPhone 17 Pro,arch=arm64'
 ```
 
 ## Swift Style
