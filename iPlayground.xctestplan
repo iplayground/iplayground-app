@@ -29,6 +29,13 @@
         "identifier" : "FeaturesTests",
         "name" : "FeaturesTests"
       }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..",
+        "identifier" : "ViewsTests",
+        "name" : "ViewsTests"
+      }
     }
   ],
   "version" : 1

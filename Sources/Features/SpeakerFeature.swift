@@ -30,9 +30,7 @@ package struct SpeakerFeature {
     @CasePathable
     package enum ViewAction: Equatable {
       case task
-      case tapURL(URL)
       case tapCopyURL(URL)
-      case tapHackMDButton
     }
   }
 
@@ -52,23 +50,10 @@ package struct SpeakerFeature {
       switch viewAction {
       case .task:
         return .none
-      case let .tapURL(url):
-        return .run { _ in
-          @Dependency(\.openURL) var openURL
-          await openURL(url)
-        }
       case let .tapCopyURL(url):
         return .run { _ in
           @Dependency(\.pasteboardClient) var pasteboardClient
           pasteboardClient.copy(url.absoluteString)
-        }
-      case .tapHackMDButton:
-        guard let hackMDURL = state.hackMDURL else {
-          return .none
-        }
-        return .run { _ in
-          @Dependency(\.openURL) var openURL
-          await openURL(hackMDURL)
         }
       }
     }

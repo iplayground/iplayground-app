@@ -3,6 +3,27 @@ import Features
 import Models
 import SwiftUI
 
+enum AppNavigationTitle: String {
+  case activity = "活動"
+  case scheduleAndWorkshops = "議程與工作坊"
+  case speaker = "講者"
+
+  var localizedResource: LocalizedStringResource {
+    switch self {
+    case .activity:
+      return LocalizedStringResource("活動", bundle: .module)
+    case .scheduleAndWorkshops:
+      return LocalizedStringResource("議程與工作坊", bundle: .module)
+    case .speaker:
+      return LocalizedStringResource("speaker.navigationTitle", bundle: .module)
+    }
+  }
+}
+
+enum HomeTabPresentation {
+  static let activitySymbol = "flag.pattern.checkered"
+}
+
 struct HomeView: View {
   let store: StoreOf<HomeFeature>
 
@@ -30,9 +51,15 @@ struct HomeView: View {
       )
       .tabItem { Label(String(localized: "社群", bundle: .module), systemImage: "person.3") }
 
-      // Tab 4: My
+      // Tab 4: Activity
       MyView(store: store.scope(state: \.my, action: \.my))
-        .tabItem { Label(String(localized: "我的", bundle: .module), systemImage: "bookmark") }
+        .tabItem {
+          Label {
+            Text(AppNavigationTitle.activity.localizedResource)
+          } icon: {
+            Image(systemName: HomeTabPresentation.activitySymbol)
+          }
+        }
 
       // Tab 5: About
       AboutView(

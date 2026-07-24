@@ -124,6 +124,7 @@ let package = Package(
     features.target,
     features.testTarget,
     views.target,
+    views.testTarget,
     publicApp.target,
   ]
 )

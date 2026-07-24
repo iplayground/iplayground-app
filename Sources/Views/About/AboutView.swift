@@ -242,38 +242,20 @@ package struct AboutView: View {
 
   @ViewBuilder
   private func urlMenuButton(link: Models.Link) -> some View {
-    Menu(
-      content: {
-        copyURLButton(url: link.url)
-      },
-      label: {
-        HStack {
-          if let iconName = link.icon {
-            Label(link.localizedTitle, systemImage: iconName)
-          } else {
-            Text(link.localizedTitle)
-          }
-          Spacer()
-          Image(systemName: "arrow.up.right.square")
-            .foregroundStyle(theme.tint)
+    CopyableLink(destination: link.url) {
+      send(.tapCopyURL(link.url))
+    } label: {
+      HStack {
+        if let iconName = link.icon {
+          Label(link.localizedTitle, systemImage: iconName)
+        } else {
+          Text(link.localizedTitle)
         }
-      },
-      primaryAction: {
-        send(.tapURL(link.url))
+        Spacer()
+        Image(systemName: "arrow.up.right.square")
+          .foregroundStyle(theme.tint)
       }
-    )
-  }
-
-  @ViewBuilder
-  private func copyURLButton(url: URL) -> some View {
-    Button(
-      action: {
-        send(.tapCopyURL(url))
-      },
-      label: {
-        Label(String(localized: "拷貝", bundle: .module), systemImage: "document.on.document")
-      }
-    )
+    }
   }
 
   private var importantLinks: [Models.Link] {

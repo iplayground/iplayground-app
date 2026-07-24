@@ -65,7 +65,7 @@ struct TodayView: View {
         }
       }
     }
-    .navigationTitle(String(localized: "議程與活動", bundle: .module))
+    .navigationTitle(Text(AppNavigationTitle.scheduleAndWorkshops.localizedResource))
     .navigationBarTitleDisplayMode(.inline)
     .task {
       send(.task)

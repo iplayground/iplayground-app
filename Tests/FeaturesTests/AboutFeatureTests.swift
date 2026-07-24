@@ -32,21 +32,6 @@ final class AboutFeatureTests: XCTestCase {
     }
   }
 
-  func testTapURL() async {
-    let testURL = URL(string: "https://iplayground.io")!
-
-    let store = TestStore(initialState: AboutFeature.State()) {
-      AboutFeature()
-    } withDependencies: {
-      $0.openURL = OpenURLEffect { url in
-        XCTAssertEqual(url, testURL)
-        return true
-      }
-    }
-
-    await store.send(\.view.tapURL, testURL)
-  }
-
   func testTapCopyURL() async {
     let testURL = URL(string: "https://iplayground.io")!
 

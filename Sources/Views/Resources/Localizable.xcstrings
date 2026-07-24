@@ -844,34 +844,6 @@
         }
       }
     },
-    "我的" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "My"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "マイ"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "내 링크"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "我的"
-          }
-        }
-      }
-    },
     "打開 Apple 地圖" : {
       "localizations" : {
         "en" : {
@@ -1105,6 +1077,70 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "暂时无法连接"
+          }
+        }
+      }
+    },
+    "speaker.navigationTitle" : {
+      "comment" : "Navigation title for an individual speaker detail page.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Speaker"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "スピーカー"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "발표자"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "讲者"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "講者"
+          }
+        }
+      }
+    },
+    "活動" : {
+      "comment" : "Tab bar item and page title for activities and resources within the conference.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activities"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アクティビティ"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "활동"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "活动"
           }
         }
       }
@@ -1562,7 +1598,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Speaker"
+            "value" : "Speakers"
           }
         },
         "ja" : {
@@ -1614,30 +1650,31 @@
         }
       }
     },
-    "議程與活動" : {
+    "議程與工作坊" : {
+      "comment" : "Navigation title for conference sessions and workshops.",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sessions & Activities"
+            "value" : "Sessions & Workshops"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "セッションとアクティビティ"
+            "value" : "セッションとワークショップ"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "세션 및 활동"
+            "value" : "세션 및 워크숍"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "议程与活动"
+            "value" : "议程与工作坊"
           }
         }
       }

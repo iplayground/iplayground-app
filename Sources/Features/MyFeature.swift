@@ -25,7 +25,6 @@ package struct MyFeature: Reducer {
 
   package enum ViewAction: Equatable {
     case task
-    case tapURL(URL)
     case tapCopyURL(URL)
   }
 
@@ -45,12 +44,6 @@ package struct MyFeature: Reducer {
       switch viewAction {
       case .task:
         return .none
-
-      case let .tapURL(url):
-        return .run { _ in
-          @Dependency(\.openURL) var openURL
-          await openURL(url)
-        }
 
       case let .tapCopyURL(url):
         return .run { _ in
